@@ -101,8 +101,10 @@ async function sendDataToGoogleSheet(data) {
         // setTimeout(() => saveStatus.remove(), 3000);  
   
     } catch (error) {  
+        // --- THIS PART WAS MISSING ---  
         console.error("Error sending data to Google Sheet:", error);  
         // resultDiv.innerHTML += '<p style="color:red;">❗ Error saving data to sheet.</p>';  
+        // --- END OF MISSING PART ---  
     }  
 }  
   
