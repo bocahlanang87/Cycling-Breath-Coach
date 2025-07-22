@@ -1,0 +1,176 @@
+body {  
+    font-family: 'Poppins', sans-serif;  
+    background-color: #f0f2f5;  
+    color: #333;  
+    margin: 0;  
+    padding: 20px;  
+    display: flex;  
+    justify-content: center;  
+    align-items: flex-start; /* Align to top */  
+    min-height: 100vh;  
+    box-sizing: border-box;  
+}  
+  
+.container {  
+    background-color: #fff;  
+    padding: 30px;  
+    border-radius: 12px;  
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);  
+    width: 100%;  
+    max-width: 500px;  
+    box-sizing: border-box;  
+    animation: fadeIn 0.8s ease-out;  
+}  
+  
+@keyframes fadeIn {  
+    from { opacity: 0; transform: translateY(-20px); }  
+    to { opacity: 1; transform: translateY(0); }  
+}  
+  
+header {  
+    text-align: center;  
+    margin-bottom: 25px;  
+}  
+  
+h1 {  
+    color: #2c3e50;  
+    margin-bottom: 5px;  
+    font-size: 2em;  
+}  
+  
+.tagline {  
+    color: #7f8c8d;  
+    font-size: 0.95em;  
+}  
+  
+.input-form label {  
+    display: block;  
+    margin-bottom: 8px;  
+    margin-top: 15px;  
+    font-weight: 600;  
+    color: #34495e;  
+}  
+  
+.input-form input[type="number"],  
+.input-form select {  
+    width: calc(100% - 20px);  
+    padding: 12px;  
+    margin-bottom: 15px;  
+    border: 1px solid #ddd;  
+    border-radius: 8px;  
+    font-size: 1em;  
+    box-sizing: border-box;  
+    transition: border-color 0.3s ease;  
+}  
+  
+.input-form input[type="number"]:focus,  
+.input-form select:focus {  
+    border-color: #3498db;  
+    outline: none;  
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);  
+}  
+  
+.input-form small {  
+    display: block;  
+    margin-top: -10px;  
+    margin-bottom: 10px;  
+    color: #7f8c8d;  
+    font-size: 0.85em;  
+}  
+  
+button {  
+    display: block;  
+    width: 100%;  
+    padding: 15px;  
+    margin-top: 25px;  
+    background-color: #27ae60; /* Green for go */  
+    color: white;  
+    border: none;  
+    border-radius: 8px;  
+    font-size: 1.1em;  
+    font-weight: 600;  
+    cursor: pointer;  
+    transition: background-color 0.3s ease, transform 0.2s ease;  
+}  
+  
+button:hover {  
+    background-color: #229a54;  
+    transform: translateY(-2px);  
+}  
+  
+button:active {  
+    transform: translateY(0);  
+}  
+  
+#result {  
+    margin-top: 30px;  
+    padding: 20px;  
+    border-radius: 10px;  
+    background-color: #ecf0f1;  
+    border: 1px solid #dcdcdc;  
+    text-align: left;  
+    line-height: 1.6;  
+    animation: slideIn 0.5s ease-out;  
+}  
+  
+@keyframes slideIn {  
+    from { opacity: 0; transform: translateY(20px); }  
+    to { opacity: 1; transform: translateY(0); }  
+}  
+  
+#result h2 {  
+    color: #2c3e50;  
+    margin-top: 0;  
+    font-size: 1.6em;  
+}  
+  
+#result p {  
+    margin-bottom: 8px;  
+    font-size: 0.95em;  
+}  
+  
+/* Specific classes for result styling based on outcome */  
+.result.warning {  
+    background-color: #fff3cd;  
+    border-color: #ffeeba;  
+    color: #664d03;  
+}  
+  
+.result.success {  
+    background-color: #d1e7dd;  
+    border-color: #badbcc;  
+    color: #0f5132;  
+}  
+  
+.result.danger {  
+    background-color: #f8d7da;  
+    border-color: #f5c2c7;  
+    color: #842029;  
+}  
+  
+.result.info {  
+    background-color: #dbeafe;  
+    border-color: #bae6fd;  
+    color: #084298;  
+}  
+  
+/* Responsive Adjustments */  
+@media (max-width: 600px) {  
+    body {  
+        padding: 10px;  
+    }  
+    .container {  
+        padding: 20px;  
+        border-radius: 8px;  
+    }  
+    h1 {  
+        font-size: 1.8em;  
+    }  
+    button {  
+        padding: 12px;  
+        font-size: 1em;  
+    }  
+    #result {  
+        padding: 15px;  
+    }  
+}
