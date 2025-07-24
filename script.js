@@ -1,43 +1,52 @@
-// --- Ride Type Configurations ---  
+// Ride configurations for different ride types and fatigue levels  
 const rideConfigs = {  
     climb: {  
         label: "Climbing Day",  
-        veryFatigued: {mainBreath: "Recovery Climb: 5-in / 5-out, gentle cadence.", tip: "❗ You’re very fatigued. Focus on smooth, steady breathing for an active recovery climb. Avoid any hard efforts.", outputClass: 'danger'},  
-        tired: {mainBreath: "Controlled Climb: 4-in / 4-out, consistent effort.", tip: "💡 Legs are tired. Focus on maintaining a steady rhythm and consistent breathing. Don't push too hard.", outputClass: 'warning'},  
-        fresh: {mainBreath: "Aggressive Climb: 2-in / 2-out (on steep sections), 3-in / 3-out (sustained).", tip: "🔥 Go for it! Push hard on the climbs. Focus on explosive inhales and strong exhales during power sections.", outputClass: 'success', bonusTip: "💪 *Bonus: Attack short, steep pitches in a big gear using deep 2-in / 2-out breathing. Stay seated and focus on deep breathing.*"}  
+        'very fatigued': {mainBreath: "Recovery Climb: 5-in / 5-out, gentle cadence.", tip: "❗ You’re very fatigued. Focus on smooth, steady breathing for an active recovery climb. Avoid any hard efforts.", outputClass: 'danger'},  
+        'tired': {mainBreath: "Controlled Climb: 4-in / 4-out, consistent effort. Focus on nasal breathing.", tip: "💡 Legs are tired. Focus on maintaining a steady rhythm and consistent breathing. Don't push too hard.", outputClass: 'warning'},  
+        'slightly fatigued': {mainBreath: "Balanced Climb: 3-in / 3-out (sustained), 2-in / 2-out (short bursts).", tip: "💡 Slight fatigue. Mix short, intense breaths with longer, smoother ones. Conserve energy.", outputClass: 'info'},  
+        'ready': {mainBreath: "Efficient Climb: 3-in / 3-out (sustained effort).", tip: "✅ Maintain a steady, efficient breathing rhythm. Focus on smooth exhales to maximize oxygen delivery and sustain your effort.", outputClass: 'info'},  
+        'peak condition': {mainBreath: "Aggressive Climb: 2-in / 2-out (on steep sections), 3-in / 3-out (sustained).", tip: "🔥 Go for it! Push hard on the climbs. Focus on explosive inhales and strong exhales during power sections.", outputClass: 'success', bonusTip: "💪 *Bonus: Attack short, steep pitches in a big gear using deep 2-in / 2-out breathing. Stay seated and focus on deep breathing.*"}  
     },  
     endurance: {  
         label: "Endurance Ride",  
-        veryFatigued: {mainBreath: "Active Recovery: 5-in / 5-out (nasal, calming).", tip: "❗ You’re very fatigued. This is an active recovery ride. Focus on deep, calming nasal breathing and very light effort.", outputClass: 'danger'},  
-        tired: {mainBreath: "Steady Endurance: 4-in / 4-out, avoid surges.", tip: "💡 You're a bit fatigued. Focus on consistent, rhythmic breathing to maintain a steady endurance pace. Avoid pushing intensity.", outputClass: 'warning'},  
-        fresh: {mainBreath: "Efficient Endurance: 3-in / 3-out or 4-in / 4-out, deep and smooth.", tip: "✅ Maintain a steady, efficient breathing rhythm. Focus on smooth exhales to maximize oxygen delivery and sustain your effort.", outputClass: 'info'}  
+        'very fatigued': {mainBreath: "Active Recovery: 5-in / 5-out (nasal, calming).", tip: "❗ You’re very fatigued. This is an carbon recovery ride. Focus on deep, calming nasal breathing and very light effort.", outputClass: 'danger'},  
+        'tired': {mainBreath: "Steady Endurance: 4-in / 4-out, avoid surges.", tip: "💡 You're a bit fatigued. Focus on consistent, rhythmic breathing to maintain a steady endurance pace. Avoid pushing intensity.", outputClass: 'warning'},  
+        'slightly fatigued': {mainBreath: "Steady Endurance: 4-in / 4-out.", tip: "💡 Slight fatigue. Focus on consistent, rhythmic breathing.", outputClass: 'info'},  
+        'ready': {mainBreath: "Efficient Endurance: 3-in / 3-out or 4-in / 4-out, deep and smooth.", tip: "✅ Maintain a steady, efficient breathing rhythm. Focus on smooth exhales to maximize oxygen oxygen delivery and sustain your effort.", outputClass: 'info'},  
+        'peak condition': {mainBreath: "Optimal Endurance: 3-in / 3-out (strong, rhythmic).", tip: "🔥 Excellent day for long, sustained efforts. Focus on powerful, consistent breathing to maintain high output.", outputClass: 'success'}  
     },  
     recovery: {  
         label: "Recovery Ride",  
-        default: {mainBreath: "Deep Recovery: 6-in / 6-out (diaphragmatic, full exhale).", tip: "🧘 This is a crucial recovery day. Focus on maximizing relaxation and using your diaphragm for deep, cleansing breaths. Aim to clear metabolic waste.", outputClass: 'success', bonusTip: "🚨 Consider off-bike recovery or a very light walk instead if you're this fatigued."}  
+        'default': {mainBreath: "Deep Recovery: 6-in / 6-out (diaphragmatic, full exhale).", tip: "🧘 This is a crucial recovery day. Focus on maximizing relaxation and using your diaphragm for deep, cleansing breaths. Aim to clear metabolic waste.", outputClass: 'success', bonusTip: "🚨 Consider off-bike recovery or a very light walk instead if you're this fatigued."}  
     },  
     interval: {  
         label: "Interval/Tempo Session",  
-        veryFatigued: {mainBreath: "Re-evaluation: 5-in / 5-out (calming, nasal).", tip: "❗ You are too fatigued for intervals. This ride should be active recovery. Abandon intervals and focus on gentle movement and deep breathing.", outputClass: 'danger'},  
-        tired: {mainBreath: "Controlled Intervals: 2-in / 2-out during efforts, 4-in / 4-out during recovery.", tip: "💡 Fatigue is present. Focus on strict breath control during efforts to maintain power. Extend recovery periods if needed.", outputClass: 'warning'},  
-        fresh: {mainBreath: "Explosive Intervals: 2-in / 2-out (sharp, powerful bursts).", easyBreath: "Active Recovery: 3-in / 3-out (between efforts).", tip: "🔥 Optimal for pushing hard! Focus on powerful breathing during your intervals and efficient recovery breaths between efforts.", outputClass: 'success'}  
+        'very fatigued': {mainBreath: "Re-evaluation: 5-in / 5-out (calming, nasal).", tip: "❗ You are too fatigued for intervals. This ride should be active recovery. Abandon intervals and focus on gentle movement and deep breathing.", outputClass: 'danger'},  
+        'tired': {mainBreath: "Controlled Intervals: 2-in / 2-out during efforts, 4-in / 4-out during recovery.", tip: "💡 Fatigue is present. Focus on strict breath control during efforts to maintain power. Extend recovery periods if needed.", outputClass: 'warning'},  
+        'slightly fatigued': {mainBreath: "Productive Intervals: 2-in / 2-out (efforts), 3-in / 3-out (recovery).", tip: "💡 Slight fatigue. Push hard but prioritize recovery intervals. Maintain form.", outputClass: 'info'},  
+        'ready': {mainBreath: "Powerful Intervals: 2-in / 2-out (sharp, powerful bursts).", easyBreath: "Active Recovery: 3-in / 3-out (between efforts).", tip: "✅ Optimal for pushing hard! Focus on powerful breathing during your intervals and efficient recovery breaths between efforts.", outputClass: 'success'},  
+        'peak condition': {mainBreath: "Explosive Intervals: 2-in / 2-out (sharp, powerful bursts).", easyBreath: "Active Recovery: 3-in / 3-out (between efforts).", tip: "🔥 Maximize your power output! Drive air in and out with force during efforts. You're ready to crush it.", outputClass: 'success'}  
     },  
     tempo: {  
         label: "Tempo Ride",  
-        veryFatigued: {mainBreath: "🧘 **Active Recovery Pace: Gentle 4-in / 6-out (nasal, calming).**", tip: "🚨 **Tempo ride not recommended today.** Your readiness is low. Convert this into an active recovery ride. Prioritize rest and gentle movement.", outputClass: 'danger'},  
-        tired: {mainBreath: "⚠️ **Controlled Tempo: Focus on smooth 4-in / 4-out. Avoid pushing too hard.**", tip: "❗ Your readiness is moderate. Aim for a controlled tempo, focusing on smooth breathing rather than high intensity. This is still productive for building endurance without overreaching.", outputClass: 'warning'},  
-        fresh: {mainBreath: "📈 **Tempo Pace: Consistent 3-in / 3-out (nasal preferred, strong focus).**", tip: "💡 Maintain a steady, challenging effort. Your breathing should be deep and rhythmic, matching your exertion. This builds sustained power for long efforts!", outputClass: 'success'}  
+        'very fatigued': {mainBreath: "🧘 **Active Recovery Pace: Gentle 4-in / 6-out (nasal, calming).**", tip: "🚨 **Tempo ride not recommended today.** Your readiness is low. Convert this into an active recovery ride. Prioritize rest and gentle movement.", outputClass: 'danger'},  
+        'tired': {mainBreath: "⚠️ **Controlled Tempo: Focus on smooth 4-in / 4-out. Avoid pushing too hard.**", tip: "❗ Your readiness is moderate. Aim for a controlled tempo, focusing on smooth breathing rather than high intensity. This is still productive for building endurance without overreaching.", outputClass: 'warning'},  
+        'slightly fatigued': {mainBreath: "Steady Tempo: Consistent 3-in / 3-out (nasal preferred).", tip: "💡 Slight fatigue. Focus on a solid, rhythmic breath to maintain your tempo effort without excessive strain.", outputClass: 'info'},  
+        'ready': {mainBreath: "📈 **Tempo Pace: Consistent 3-in / 3-out (nasal preferred, strong focus).**", tip: "💡 Maintain a steady, challenging effort. Your breathing should be deep and rhythmic, matching your exertion. This builds sustained power for long efforts!", outputClass: 'success'},  
+        'peak condition': {mainBreath: "📈 **Tempo Pace: Consistent 3-in / 3-out (powerful, rhythmic).**", tip: "🔥 Excellent day for high-end tempo work. Focus on maximizing each breath to sustain your effort.", outputClass: 'success'}  
     },  
     showoff: {  
         label: "🔥 Show-Off Time! 🔥",  
-        veryFatigued: {mainBreath: "Control the Show: 4-in / 4-out, avoid big surges.", tip: "❗ You’re too fatigued for hard efforts. Try to stay in the group but don't lead. Use today to spin the legs and enjoy the ride.", outputClass: 'warning'},  
-        tired: {mainBreath: "Tempo Flow: 3-in / 3-out. Surge only when necessary.", tip: "💡 Legs are tired, so avoid chasing every surge. Focus on breathing rhythm and try to hide in the group when possible.", outputClass: 'info'},  
-        fresh: {mainBreath: "Surge Mode: 2-in / 2-out for bursts, 4-in / 4-out for recovery.", easyBreath: "Cruise: 3-in / 3-out between efforts.", tip: "🔥 You're fresh and ready to shine. Push hard on the front, sprint with style, and recover smart in the draft. Show control and power!", outputClass: 'success', bonusTip: "💪 *Bonus: Attack short hills in a big gear using deep 2-in / 2-out breathing. It’s your day to impress.*"},  
-        normal: {mainBreath: "Balanced Push: 2-in / 2-out for efforts, 3-in / 3-out when cruising.", easyBreath: "", tip: "💡 You’re in decent shape. Ride strong with your buddies. Save energy between efforts and breathe deep during pulls.", outputClass: 'info'}  
+        'very fatigued': {mainBreath: "Control the Show: 4-in / 4-out, avoid big surges.", tip: "❗ You’re too fatigued for hard efforts. Try to stay in the group but don't lead. Use today to spin the legs and enjoy the ride.", outputClass: 'warning'},  
+        'tired': {mainBreath: "Tempo Flow: 3-in / 3-out. Surge only when necessary.", tip: "💡 Legs are tired, so avoid chasing every surge. Focus on breathing rhythm and try to hide in the group when possible.", outputClass: 'info'},  
+        'slightly fatigued': {mainBreath: "Strategic Breathing: 3-in / 3-out with occasional 2-in / 2-out for surges.", tip: "💡 Slight fatigue. Be strategic. Conserve energy, but still respond to surges with sharp breathing.", outputClass: 'info'},  
+        'ready': {mainBreath: "Balanced Push: 2-in / 2-out for efforts, 3-in / 3-out when cruising.", easyBreath: "", tip: "💡 You’re in decent shape. Ride strong with your buddies. Save energy between efforts and breathe deep during pulls.", outputClass: 'info'},  
+        'peak condition': {mainBreath: "Surge Mode: 2-in / 2-out for bursts, 4-in / 4-out for recovery.", easyBreath: "Cruise: 3-in / 3-out between efforts.", tip: "🔥 You're fresh and ready to shine. Push hard on the front, sprint with style and recover smart in the draft. Show control and power!", outputClass: 'success', bonusTip: "💪 *Bonus: Attack short hills in a big gear using deep 2-in / 2-out breathing. It’s your day to impress.*"}  
     }  
 };  
   
-// --- Cache DOM elements for efficiency ---  
+// Cache DOM elements  
 const rhrTodayInput = document.getElementById('rhrToday');  
 const rhrAvgInput = document.getElementById('rhrAvg');  
 const sleepScoreInput = document.getElementById('sleepScore');  
@@ -46,200 +55,206 @@ const rideTypeSelect = document.getElementById('rideType');
 const legFeelSelect = document.getElementById('legFeel');  
 const mentalFocusSelect = document.getElementById('mentalFocus');  
 const resultDiv = document.getElementById('result');  
-const getTipButton = document.getElementById('getTipButton');   
+const getTipButton = document.getElementById('getTipButton');  
+const saveFeedbackDiv = document.getElementById('saveFeedback');  
+const saveDataButton = document.getElementById('saveDataButton');  
   
-// --- Fatigue Status Logic (Your provided function) ---  
+// Google Apps Script URL for Data Logging  
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbznSAcfk0kB0DV-BX_x_rM-KCnNeRjjqIDNIHwZbyWdS0zSgDRW61cnLyzO8akjSIG7/exec";  
+  
+// Determine Fatigue Status  
 function getFatigueStatus(rhrToday, rhrAvg, sleepScore) {  
   const rhrDiff = rhrToday - rhrAvg;  
-  let status = "";  
-  let tip = "";  
-  let isFatigued = false; // Added to easily check fatigue state in main logic  
+  let status = "", tip = "", lookupKey = "";  
   
   if (rhrDiff > 5 && sleepScore < 70) {  
-    status = "🚨 Fatigued";  
-    tip = "High RHR and poor sleep. Prioritize rest.";  
-    isFatigued = true;  
+    status = "🚨 Fatigued"; tip = "High RHR and poor sleep. Prioritize rest."; lookupKey = "very fatigued";  
   } else if (rhrDiff > 3 && sleepScore < 80) {  
-    status = "⚠️ Slightly Fatigued";  
-    tip = "Light activity or recovery recommended.";  
-    isFatigued = true;  
+    status = "⚠️ Slightly Fatigued"; tip = "Light activity or recovery recommended."; lookupKey = "tired";  
+  } else if (rhrDiff > 0 && sleepScore < 90) {  
+    status = "💡 Moderate Fatigue"; tip = "You might feel a bit off. Focus on controlled efforts."; lookupKey = "slightly fatigued";  
   } else if (rhrDiff < -3 && sleepScore > 85) {  
-    status = "🔥 Peak Condition";  
-    tip = "Excellent recovery. Great day for KOM or hard effort.";  
+    status = "🔥 Peak Condition"; tip = "Excellent recovery. Great day for KOM or hard effort."; lookupKey = "peak condition";  
   } else {  
-    status = "✅ Ready";  
-    tip = "You're ready to train. Maintain awareness.";  
+    status = "✅ Ready"; tip = "You're ready to train. Maintain awareness."; lookupKey = "ready";  
   }  
-  
-  return { status, tip, isFatigued };  
+  return { status, tip, lookupKey };  
 }  
   
-// --- Function to send data to Google Sheet ---  
-async function sendDataToGoogleSheet(data) {  
-    // IMPORTANT: This is YOUR Google Apps Script Web App URL!  
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbznSAcfk0kB0DV-BX_x_rM-KCnNeRjjqIDNIHwZbyWdS0zSgDRW61cnLyzO8akjSIG7/exec";   
+// Calculate Combined Readiness Score  
+function getCombinedReadinessScore(legFeel, rhrToday, rhrAvg, sleepScore, mentalFocus) {  
+    let score = 0;  
+    const rhrDiff = rhrToday - rhrAvg;  
+    const weights = {'Leg Feel': 0.4, 'RHR Factor': 0.3, 'Sleep Score': 0.2, 'Mental Focus': 0.1};  
   
-    try {  
-        const response = await fetch(WEB_APP_URL, {  
-            method: "POST",  
-            mode: "no-cors", // Required for Apps Script web app deployments  
-            headers: {  
-                "Content-Type": "application/json",  
-            },  
-            body: JSON.stringify(data),  
-        });  
-  
-        // Since mode is 'no-cors', response.ok will always be true and response.json() will fail.  
-        // We rely on the script executing without error on the server side.  
-        console.log("Data sent to Google Sheet (response might be opaque due to no-cors).");  
-        // Optional: Add a small UI indicator here if you want to show "Data Saved!"  
-        // For example:  
-        // const saveStatus = document.createElement('p');  
-        // saveStatus.textContent = '✅ Data saved to sheet!';  
-        // saveStatus.style.color = 'green';  
-        // resultDiv.appendChild(saveStatus);  
-        // setTimeout(() => saveStatus.remove(), 3000);  
-  
-    } catch (error) {  
-        // --- THIS PART WAS MISSING ---  
-        console.error("Error sending data to Google Sheet:", error);  
-        // resultDiv.innerHTML += '<p style="color:red;">❗ Error saving data to sheet.</p>';  
-        // --- END OF MISSING PART ---  
+    let legFeelFactor = 0;  
+    switch (legFeel) {  
+        case 'very_fresh': legFeelFactor = 10; break;  
+        case 'fresh': legFeelFactor = 8; break;  
+        case 'normal': legFeelFactor = 6; break;  
+        case 'tired': legFeelFactor = 3; break;  
+        case 'very_tired': legFeelFactor = 1; break;  
     }  
+    score += legFeelFactor * weights['Leg Feel'];  
+  
+    let rhrFactor = 0;  
+    if (rhrDiff <= -3) rhrFactor = 10;  
+    else if (rhrDiff >= -2 && rhrDiff <= 2) rhrFactor = 7;  
+    else if (rhrDiff >= 3 && rhrDiff <= 5) rhrFactor = 4;  
+    else rhrFactor = 1;  
+    score += rhrFactor * weights['RHR Factor'];  
+  
+    score += (sleepScore / 10) * weights['Sleep Score'];  
+  
+    let mentalFocusFactor = 0;  
+    switch (mentalFocus) {  
+        case 'sharp': mentalFocusFactor = 5; break;  
+        case 'okay': mentalFocusFactor = 3; break;  
+        case 'dull': mentalFocusFactor = 1; break;  
+    }  
+    score += (mentalFocusFactor * 2) * weights['Mental Focus'];  
+  
+    return (score / 10).toFixed(2);  
 }  
   
+// Track and limit 2-in/2-out suggestions  
+function manageBreathHistory(currentBreathTip, rideType) {  
+    const today = new Date().toISOString().split('T')[0];  
+    let history = JSON.parse(localStorage.getItem('breathTipHistory')) || [];  
   
-// --- Main Recommendation Logic ---  
+    history = history.filter(entry => entry.date >= new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]);  
+  
+    const isHighIntensityBreath = currentBreathTip.includes('2-in / 2-out') || currentBreathTip.includes('Explosive') || currentBreathTip.includes('Powerful Intervals') || currentBreathTip.includes('Surge Mode');  
+  
+    if (isHighIntensityBreath) {  
+        const recentHighIntensityDays = new Set();  
+        for (const entry of history) {  
+            if (entry.date !== today && entry.isHighIntensity) {  
+                recentHighIntensityDays.add(entry.date);  
+            }  
+        }  
+  
+        if (recentHighIntensityDays.size >= 2) {  
+            const alternativeTip = "Controlled Breathing: 4-in / 4-out (nasal, steady effort).";  
+            history.push({ date: today, rideType: rideType, breathTip: alternativeTip, isHighIntensity: false });  
+            localStorage.setItem('breathTipHistory', JSON.stringify(history));  
+            return { override: true, warning: "You've been consistently using high-intensity breathing for the past two days. Consider a more moderate approach today to aid recovery and prevent overtraining.", alternativeBreath: alternativeTip };  
+        }  
+    }  
+  
+    const alreadyLoggedToday = history.some(entry => entry.date === today && entry.breathTip === currentBreathTip);  
+    if (!isHighIntensityBreath || (isHighIntensityBreath && !alreadyLoggedToday)) {  
+        history.push({ date: today, rideType: rideType, breathTip: currentBreathTip, isHighIntensity: isHighIntensityBreath });  
+        localStorage.setItem('breathTipHistory', JSON.stringify(history));  
+    }  
+    return { override: false };  
+}  
+  
+// Main function to get recommendation  
 function getRecommendation() {  
-    // Parse input values as integers  
+    resultDiv.innerHTML = 'Enter your details and click \'Get My Breath Tip\' to see a recommendation.';  
+    resultDiv.className = 'result';  
+  
     const rhrToday = parseInt(rhrTodayInput.value);  
     const rhrAvg = parseInt(rhrAvgInput.value);  
     const sleepScore = parseInt(sleepScoreInput.value);  
+    const legFeel = legFeelSelect.value;  
     const duration = parseInt(durationInput.value);  
     const rideType = rideTypeSelect.value;  
-    const legFeel = legFeelSelect.value;  
     const mentalFocus = mentalFocusSelect.value;  
   
-    // Clear previous output class for styling  
-    resultDiv.classList.remove('warning', 'success', 'danger', 'info');  
+    // Input Validation  
+    if (isNaN(rhrToday) || rhrToday < 30 || rhrToday > 100) { resultDiv.innerHTML = "<p class='danger'>❗ Please enter a valid RHR Today (30-100 bpm).</p>"; resultDiv.classList.add('danger'); rhrTodayInput.focus(); return null; }  
+    if (isNaN(rhrAvg) || rhrAvg < 30 || rhrAvg > 100) { resultDiv.innerHTML = "<p class='danger'>❗ Please enter a valid RHR 7-Day Avg (30-100 bpm).</p>"; resultDiv.classList.add('danger'); rhrAvgInput.focus(); return null; }  
+    if (isNaN(sleepScore) || sleepScore < 0 || sleepScore > 100) { resultDiv.innerHTML = "<p class='danger'>❗ Please enter a valid Sleep Score (0-100).</p>"; resultDiv.classList.add('danger'); sleepScoreInput.focus(); return null; }  
+    if (!legFeel) { resultDiv.innerHTML = "<p class='danger'>❗ Please select how your legs feel.</p>"; resultDiv.classList.add('danger'); legFeelSelect.focus(); return null; }  
+    if (isNaN(duration) || duration < 10) { resultDiv.innerHTML = "<p class='danger'>❗ Please enter a valid Training Duration (at least 10 minutes).</p>"; resultDiv.classList.add('danger'); durationInput.focus(); return null; }  
+    if (!rideType) { resultDiv.innerHTML = "<p class='danger'>❗ Please select a Ride Type.</p>"; resultDiv.classList.add('danger'); rideTypeSelect.focus(); return null; }  
+    if (!mentalFocus) { resultDiv.innerHTML = "<p class='danger'>❗ Please select your Mental Focus.</p>"; resultDiv.classList.add('danger'); mentalFocusSelect.focus(); return null; }  
+    if (Math.abs(rhrToday - rhrAvg) > 30) { resultDiv.innerHTML = "<p class='warning'>❗ Your current RHR seems extreme compared to your average. Please recheck your input.</p>"; resultDiv.classList.add('warning'); rhrTodayInput.focus(); return null; }  
   
-    // --- Input Validations ---  
-    if (isNaN(rhrToday) || rhrToday < 30 || rhrToday > 100) {  
-        resultDiv.innerHTML = "<p>❗ Please enter a valid Resting Heart Rate (Today) between 30 and 100.</p>";  
-        resultDiv.classList.add('warning'); rhrTodayInput.focus(); return;  
-    }  
-    if (isNaN(rhrAvg) || rhrAvg < 30 || rhrAvg > 100) {  
-        resultDiv.innerHTML = "<p>❗ Please enter a valid Average RHR between 30 and 100.</p>";  
-        resultDiv.classList.add('warning'); rhrAvgInput.focus(); return;  
-    }  
-    if (isNaN(sleepScore) || sleepScore < 0 || sleepScore > 100) {  
-        resultDiv.innerHTML = "<p>❗ Please enter a valid Sleep Score between 0 and 100.</p>";  
-        resultDiv.classList.add('warning'); sleepScoreInput.focus(); return;  
-    }  
-    if (isNaN(duration) || duration < 10) {  
-        resultDiv.innerHTML = "<p>❗ Please enter a valid Training Duration (minimum 10 minutes).</p>";  
-        resultDiv.classList.add('warning'); durationInput.focus(); return;  
-    }  
+    const { status: fatigueStatus, tip: fatigueOverallTip, lookupKey: fatigueLookupKey } = getFatigueStatus(rhrToday, rhrAvg, sleepScore);  
+    const combinedReadinessScore = getCombinedReadinessScore(legFeel, rhrToday, rhrAvg, sleepScore, mentalFocus);  
   
-    // --- Get fatigue status from the new RHR/Sleep function ---  
-    const fatigueMetrics = getFatigueStatus(rhrToday, rhrAvg, sleepScore);  
-    const { status: fatigueStatus, tip: fatigueTip, isFatigued } = fatigueMetrics;  
-  
-    // --- Adjust fatigue flags for breath recommendations based on combined input ---  
-    const veryFatigueFlag = isFatigued && (fatigueStatus === "🚨 Fatigued" || legFeel === 'very_tired');  
-    const tiredLegsFlag = isFatigued || legFeel === 'tired' || legFeel === 'very_tired';   
-    const freshLegsFlag = !isFatigued && (legFeel === 'very_fresh' || legFeel === 'fresh');   
-  
-    // --- Calculate a Combined Readiness Score ---  
-    const legScoreMap = {'very_fresh':10,'fresh':7,'normal':5,'tired':3,'very_tired':0};  
-    const legScoreVal = legScoreMap[legFeel];  
-    const mentalFocusScoreMap = {'sharp':10,'okay':5,'dull':0};  
-    const mentalFocusScoreVal = mentalFocusScoreMap[mentalFocus];  
-  
-    const rhrReadinessFactor = ((100 - rhrToday) / 70) * 10;   
-    const sleepReadinessFactor = (sleepScore / 100) * 10;   
-  
-    // Weighted average for overall readiness  
-    const readinessScore = (legScoreVal * 0.4) + (rhrReadinessFactor * 0.3) + (sleepReadinessFactor * 0.2) + (mentalFocusScoreVal * 0.1);  
-  
-    const optimalForTorqueWork = readinessScore > 7.5 && !tiredLegsFlag && fatigueStatus === "🔥 Peak Condition";  
-  
-    // --- Determine Ride Configuration and Specific Breath Plan ---  
     const config = rideConfigs[rideType];  
-    let currentCondition = null;  
+    if (!config) { resultDiv.innerHTML = `<p class="danger">❗ Ride type "${rideType}" configuration not found. Please check your selection.</p>`; resultDiv.classList.add('danger'); return null; }  
   
-    if (veryFatigueFlag && config.veryFatigued) {  
-        currentCondition = config.veryFatigued;  
-    } else if (tiredLegsFlag && config.tired) {  
-        currentCondition = config.tired;  
-    } else if (freshLegsFlag && config.fresh) {  
-        // Special case for "showoff" ride: if even slightly tired, downgrade from full "fresh" showoff  
-        if (rideType === "showoff" && tiredLegsFlag) {   
-            currentCondition = config.normal;   
-        } else {  
-            currentCondition = config.fresh;  
-        }  
-    } else if (rideType === "showoff" && config.normal) { // Default for showoff if not fresh or very fatigued  
-         currentCondition = config.normal;   
-    } else {  
-        // Fallback for cases not explicitly covered, using 'default' or a 'fresh' or 'normal' state if available.  
-        currentCondition = config.default || config.fresh || config.normal;  
+    let recommendation = config[fatigueLookupKey];  
+    if (!recommendation && config.default) recommendation = config.default;  
+    if (!recommendation) {  
+        recommendation = { mainBreath: "General: 4-in / 4-out (nasal)", easyBreath: "Calming: 4-in / 6-out", tip: "Focus on smooth, consistent breathing. Always listen to your body.", outputClass: "info", bonusTip: "" };  
     }  
   
-    // --- Extract breath plan and tips, with sensible defaults ---  
-    const {  
-        mainBreath = "No specific plan yet. Focus on comfort.",  
-        easyBreath: initialEasyBreath = "",   
-        tip = "No specific tips for this condition.",  
-        outputClass = 'info'  
-    } = currentCondition || {};   
+    const historyCheck = manageBreathHistory(recommendation.mainBreath, rideType);  
+    let finalBreathTip = recommendation.mainBreath;  
+    let finalOverallTip = recommendation.tip;  
+    let finalOutputClass = recommendation.outputClass;  
+    let finalBonusTip = recommendation.bonusTip;  
+    let warningMessageHtml = '';  
   
-    let easyBreath = initialEasyBreath;  
-    let lowCadenceTorqueTip = (currentCondition && currentCondition.bonusTip && optimalForTorqueWork) ? currentCondition.bonusTip : "";  
-  
-    // --- Specific adjustment for long tempo rides ---  
-    if (rideType === "tempo" && duration > 90 && freshLegsFlag) {   
-         easyBreath = (easyBreath ? easyBreath + "\n" : "") + "Mid-ride check: Periodically bring your attention back to your breath (e.g., 2-3 minutes of nasal 4-in / 6-out) for mindfulness.";  
-    }  
-      
-    // --- Add the strategic 2:2 breath tip if applicable ---  
-    let twoTwoTip = '';  
-    if (mainBreath.includes('2-in / 2-out')) {  
-        twoTwoTip = '💡 **Strategic Tip:** Aim for **max 2-3 days per week** using the 2-in / 2-out breath. Use it like a weapon for hard efforts, not a default.';  
+    if (historyCheck.override) {  
+        finalBreathTip = historyCheck.alternativeBreath;  
+        finalOverallTip = historyCheck.warning + " " + finalOverallTip;  
+        finalOutputClass = 'warning';  
+        finalBonusTip = '';  
+        warningMessageHtml = `<p class="warning">⚠️ ${historyCheck.warning}</p>`;  
     }  
   
-    // --- Construct the final output HTML ---  
-    let outputHtml = `<h2>${config.label}</h2>  
-        <p><strong>Overall Readiness:</strong> ${fatigueStatus} – ${fatigueTip}</p>  
-        <p><strong>Recommended Breath Plan:</strong></p>  
-        <p><strong>Main Effort:</strong> 💨 ${mainBreath}</p>  
-        ${easyBreath ? `<p><strong>Between Efforts / Cruise:</strong> 🧘 ${easyBreath}</p>` : ''}  
-        <p><strong>Warm-up & Cool-down:</strong> 🫁 4-in / 6-out (nasal, calming)</p>  
-        <p><strong>Tips:</strong> ${tip}</p>  
-        ${lowCadenceTorqueTip ? `<p>${lowCadenceTorqueTip}</p>` : ''}  
-        ${twoTwoTip ? `<p>${twoTwoTip}</p>` : ''}  
-        <p style="font-size: 0.9em; color: #555;">*Based on your inputs. Always listen to your body.</p>  
-        <p style="font-size: 0.8em; color: #777;"><em>Your Combined Readiness Score: ${readinessScore.toFixed(2)}</em></p>  
+    let outputHtml = `  
+        <h2>${config.label || rideType.charAt(0).toUpperCase() + rideType.slice(1)}</h2>  
+        <p><strong>Overall Readiness:</strong> ${fatigueStatus} – ${fatigueOverallTip}</p>  
+        ${warningMessageHtml}  
+        <h3>Recommended Breath Plan:</h3>  
+        <p><span id="mainBreathOutput">💨 ${finalBreathTip || 'N/A'}</span></p>  
     `;  
-    resultDiv.innerHTML = outputHtml;  
-    resultDiv.className = `result ${outputClass}`; // Apply styling based on recommendation's class  
+    if (recommendation.easyBreath && !historyCheck.override) {  
+        outputHtml += `<p>🫁 Warm-up & Cool-down: ${recommendation.easyBreath}</p>`;  
+    }  
+    outputHtml += `<p><strong>Tips:</strong> <span id="tipOutput">${finalOverallTip || 'No specific tips.'}</span></p>`;  
+    if (finalBonusTip) {  
+        outputHtml += `<p>💡 <strong>Bonus Tip:</strong> ${finalBonusTip}</p>`;  
+    }  
+    outputHtml += `<p>*Based on your inputs. Always listen to your body.</p>`;  
+    outputHtml += `<p>Your Combined Readiness Score: ${combinedReadinessScore}</p>`;  
   
-    // --- Send data to Google Sheet after successful calculation ---  
-    const dataToSend = {  
-        rhrToday: rhrToday,  
-        rhrAvg: rhrAvg,  
-        sleepScore: sleepScore,  
-        legFeel: legFeelSelect.options[legFeelSelect.selectedIndex].text, // Send readable text  
-        duration: duration,  
-        rideType: rideTypeSelect.options[rideTypeSelect.selectedIndex].text, // Send readable text  
-        mentalFocus: mentalFocusSelect.options[mentalFocusSelect.selectedIndex].text, // Send readable text  
+    resultDiv.innerHTML = outputHtml;  
+    resultDiv.classList.add('result', finalOutputClass || 'info');  
+  
+    return {  
+        rhrToday, rhrAvg, sleepScore, legFeel, duration, rideType, mentalFocus,  
         fatigueStatus: fatigueStatus,  
-        breathTip: mainBreath // Sending just the main breath for simplicity  
+        breathTip: finalBreathTip,  
+        overallTip: finalOverallTip,  
+        combinedReadinessScore: combinedReadinessScore,  
+        timestamp: new Date().toISOString()  
     };  
-    sendDataToGoogleSheet(dataToSend);  
 }  
   
-// --- Attach event listener after the DOM is fully loaded ---  
-document.addEventListener('DOMContentLoaded', () => {  
-    getTipButton.addEventListener('click', getRecommendation);  
+// Send data to Google Sheet  
+async function sendDataToGoogleSheet(data) {  
+    saveFeedbackDiv.textContent = 'Saving data...';  
+    saveFeedbackDiv.className = 'feedback-message show saving';  
+  
+    try {  
+        await fetch(WEB_APP_URL, {  
+            method: "POST", mode: "no-cors",  
+            headers: { "Content-Type": "application/json" },  
+            body: JSON.stringify(data),  
+        });  
+        saveFeedbackDiv.textContent = '✅ Data saved to sheet!';  
+        saveFeedbackDiv.className = 'feedback-message show success-save';  
+    } catch (error) {  
+        console.error("Error sending data to Google Sheet:", error);  
+        saveFeedbackDiv.textContent = '❗ Error saving data to sheet.';  
+        saveFeedbackDiv.className = 'feedback-message show error-save';  
+    } finally {  
+        setTimeout(() => { saveFeedbackDiv.classList.remove('show'); saveFeedbackDiv.textContent = ''; }, 3000);  
+    }  
+}  
+  
+// Event Listeners  
+getTipButton.addEventListener('click', () => { getRecommendation(); });  
+saveDataButton.addEventListener('click', async () => {  
+    const dataToSave = getRecommendation();  
+    if (dataToSave) await sendDataToGoogleSheet(dataToSave);  
 });
