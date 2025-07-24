@@ -1,80 +1,97 @@
 <!DOCTYPE html>  
 <html lang="en">  
 <head>  
-  <meta charset="UTF-8">  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-  <title>🚴‍♂️ Cycling Breath Coach</title>  
-  <link rel="preconnect" href="https://fonts.googleapis.com">  
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">  
-  <link rel="stylesheet" href="style.css">  
-  
-  <link rel="icon" href="images/favicon.png" type="image/png">  
-  
-  <meta name="theme-color" content="#27ae60"/> <link rel="manifest" href="manifest.json">  
-  <link rel="apple-touch-icon" href="images/icon-192x192.png"> <link rel="icon" type="image/png" sizes="192x192" href="images/icon-192x192.png">  
-  <link rel="icon" type="image/png" sizes="512x512" href="images/icon-512x512.png">  
-  
-  <meta name="apple-mobile-web-app-capable" content="yes">  
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">  
-  <meta name="apple-mobile-web-app-title" content="BikeCoach"> </head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Cycling Breath Coach</title>  
+    <link rel="stylesheet" href="style.css">  
+</head>  
 <body>  
-  <div class="container">  
-    <header>  
-      <h1>🚴‍♂️ Cycling Breath Coach</h1>  
-      <p class="tagline">Personalized breathing tips for your ride.</p>  
-    </header>  
+    <div class="container">  
+        <h1>Cycling Breath Coach</h1>  
   
-    <main class="input-form">  
-      <label for="rhrToday">Resting Heart Rate (Today):</label>  
-      <input type="number" id="rhrToday" min="30" max="100" placeholder="e.g., 55 (from your wearable)" required>  
+        <div class="form-group">  
+            <label for="rhrToday">Resting Heart Rate (RHR) Today (bpm):</label>  
+            <input type="number" id="rhrToday" placeholder="e.g., 55" required min="30" max="100">  
+        </div>  
   
-      <label for="rhrAvg">Average RHR (Last 7 Days):</label>  
-      <input type="number" id="rhrAvg" min="30" max="100" placeholder="e.g., 52 (from your wearable)" required>  
+        <div class="form-group">  
+            <label for="rhrAvg">RHR 7-Day Average (bpm):</label>  
+            <input type="number" id="rhrAvg" placeholder="e.g., 52" required min="30" max="100">  
+        </div>  
   
-      <label for="sleepScore">Sleep Score (0-100):</label>  
-      <input type="number" id="sleepScore" min="0" max="100" placeholder="e.g., 85 (from your wearable)" required>  
+        <div class="form-group">  
+            <label for="sleepScore">Sleep Score (0-100):</label>  
+            <input type="number" id="sleepScore" placeholder="e.g., 85" required min="0" max="100">  
+        </div>  
   
-      <label for="legFeel">How do your legs feel?</label>  
-      <select id="legFeel" required>  
-        <option value="">Select...</option> <option value="very_fresh">Very Fresh - Ready to Go!</option>  
-        <option value="fresh">Fresh - Good to go</option>  
-        <option value="normal" selected>Normal - No strong feeling</option>  
-        <option value="tired">Tired - Legs feel heavy</option>  
-        <option value="very_tired">Very Tired - Need a break</option>  
-      </select>  
+        <div class="form-group">  
+            <label for="legFeel">How do your legs feel?</label>  
+            <select id="legFeel" required>  
+                <option value="">Select...</option>  
+                <option value="very_fresh">Very Fresh - Zero Fatigue</option>  
+                <option value="fresh">Fresh - Ready to Go</option>  
+                <option value="normal">Normal - A Bit of Fatigue</option>  
+                <option value="tired">Tired - Noticeable Fatigue</option>  
+                <option value="very_tired">Very Tired - Heavily Fatigued</option>  
+            </select>  
+        </div>  
   
-      <label for="duration">Training Duration (minutes):</label>  
-      <input type="number" id="duration" min="10" placeholder="e.g., 60" aria-describedby="duration-help" required>  
-      <small id="duration-help">Minimum 10 minutes.</small>  
+        <div class="form-group">  
+            <label for="duration">Planned Training Duration (minutes):</label>  
+            <input type="number" id="duration" placeholder="e.g., 60" min="0">  
+            <small>Enter 0 or leave blank for Rest Day / No Ride.</small>  
+        </div>  
   
-      <label for="rideType">Ride Type:</label>  
-      <select id="rideType" required>  
-        <option value="">Select...</option> <option value="climb">Climbing Day</option>  
-        <option value="endurance">Endurance Ride</option>  
-        <option value="recovery">Recovery Ride</option>  
-        <option value="interval">Interval/Tempo Session</option>  
-        <option value="tempo">Tempo Ride</option>  
-        <option value="showoff">🔥 Show-Off / Fast Group Ride</option>  
-      </select>  
+        <div class="form-group">  
+            <label for="rideType">Ride Type:</label>  
+            <select id="rideType" required>  
+                <option value="">Select...</option>  
+                <option value="climb">Climbing Day</option>  
+                <option value="endurance">Endurance Ride</option>  
+                <option value="recovery">Recovery Ride</option>  
+                <option value="interval">Interval/Tempo Session</option>  
+                <option value="tempo">Tempo Ride</option>  
+                <option value="showoff">🔥 Show-Off / Fast Group Ride</option>  
+                <option value="rest_day">😴 Rest Day / No Ride</option>  
+            </select>  
+        </div>  
   
-      <label for="mentalFocus">Mental Focus:</label>  
-      <select id="mentalFocus" required>  
-        <option value="">Select...</option> <option value="sharp">Sharp - Laser focused</option>  
-        <option value="okay" selected>Okay - Average concentration</option>  
-        <option value="dull">Dull - Distracted / Fatigued</option>  
-      </select>  
+        <div class="form-group">  
+            <label for="mentalFocus">Mental Focus:</label>  
+            <select id="mentalFocus" required>  
+                <option value="">Select...</option>  
+                <option value="sharp">Sharp - Highly Focused</option>  
+                <option value="okay">Okay - Generally Focused</option>  
+                <option value="dull">Dull - Difficulty Focusing</option>  
+            </select>  
+            <small>Not applicable for Rest Day / No Ride.</small>  
+        </div>  
   
-      <button id="getTipButton">Get My Breath Tip</button>  
-      <div id="saveFeedback" class="feedback-message" aria-live="polite"></div>  
-      <button id="saveDataButton">Save Ride Data</button>  
-    </main>  
+        <div class="form-group">  
+            <label for="offRideActivity">Off-Bike Activity Today:</label>  
+            <select id="offRideActivity" required>  
+                <option value="">Select...</option>  
+                <option value="sedentary">Mostly Sedentary</option>  
+                <option value="light_movement">Light Movement (e.g., walking)</option>  
+                <option value="active_recovery">Active Recovery (e.g., yoga, stretching)</option>  
+                <option value="strength_training">Strength Training</option>  
+                <option value="other_sport">Other Sport/Activity</option>  
+            </select>  
+        </div>  
   
-    <div id="result" aria-live="polite">  
-      Enter your details and click 'Get My Breath Tip' to see a recommendation.  
+        <button id="getTipButton">Get My Breath Tip</button>  
+        <button id="saveDataButton">Save Data to Google Sheet</button>  
+  
+        <div id="saveFeedback" class="feedback-message"></div>  
+  
+        <div id="result" class="result">  
+            Enter your details and click 'Get My Breath Tip' to see a recommendation.  
+        </div>  
     </div>  
-  </div>  
   
-  <script src="script.js"></script>  
+    <script type="module" src="rideConfigs.js"></script>  
+    <script type="module" src="utils.js"></script>  
+    <script type="module" src="script.js"></script>  
 </body>  
 </html>
