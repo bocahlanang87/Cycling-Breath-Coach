@@ -23,6 +23,11 @@ async function sendDataToGoogleSheet(data) {
         await fetch(WEB_APP_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data), });  
         saveFeedbackDiv.textContent = '✅ Data saved to sheet!';  
         saveFeedbackDiv.className = 'feedback-message show success-save';  
+  
+        // NEW: Only save breath history after successful submission  
+        // data.breathTip and data.rideType are available here from the getRecommendation return  
+        manageBreathHistory(data.breathTip, data.rideType, true);  
+  
     } catch (error) {  
         console.error("Error sending data to Google Sheet:", error);  
         saveFeedbackDiv.textContent = '❗ Error saving data to sheet.';  
@@ -68,7 +73,9 @@ function getRecommendation() {
     if (!recommendation && config.default) recommendation = config.default;  
     if (!recommendation) { recommendation = { mainBreath: "General: 4-in / 4-out (nasal)", easyBreath: "Calming: 4-in / 6-out", tip: "Focus on smooth, consistent breathing. Always listen to your body.", outputClass: "info", bonusTip: "" }; }  
   
-    const historyCheck = manageBreathHistory(recommendation.mainBreath, rideType);  
+    // MODIFIED: Call manageBreathHistory with shouldRecord = false (only for checking/overrides, not saving)  
+    const historyCheck = manageBreathHistory(recommendation.mainBreath, rideType, false);  
+  
     let finalBreathTip = recommendation.mainBreath;  
     let finalOverallTip = recommendation.tip;  
     let finalOutputClass = recommendation.outputClass;  
