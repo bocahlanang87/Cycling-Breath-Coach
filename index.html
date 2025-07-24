@@ -8,40 +8,49 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>  
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">  
   <link rel="stylesheet" href="style.css">  
-</head>  
+  
+  <link rel="icon" href="images/favicon.png" type="image/png">  
+  
+  <meta name="theme-color" content="#27ae60"/> <link rel="manifest" href="manifest.json">  
+  <link rel="apple-touch-icon" href="images/icon-192x192.png"> <link rel="icon" type="image/png" sizes="192x192" href="images/icon-192x192.png">  
+  <link rel="icon" type="image/png" sizes="512x512" href="images/icon-512x512.png">  
+  
+  <meta name="apple-mobile-web-app-capable" content="yes">  
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">  
+  <meta name="apple-mobile-web-app-title" content="BikeCoach"> </head>  
 <body>  
   <div class="container">  
     <header>  
       <h1>🚴‍♂️ Cycling Breath Coach</h1>  
       <p class="tagline">Personalized breathing tips for your ride.</p>  
     </header>  
-    
+  
     <main class="input-form">  
       <label for="rhrToday">Resting Heart Rate (Today):</label>  
-      <input type="number" id="rhrToday" min="30" max="100" placeholder="e.g., 55 (from your wearable)">  
-        
+      <input type="number" id="rhrToday" min="30" max="100" placeholder="e.g., 55 (from your wearable)" required>  
+  
       <label for="rhrAvg">Average RHR (Last 7 Days):</label>  
-      <input type="number" id="rhrAvg" min="30" max="100" placeholder="e.g., 52 (from your wearable)">  
+      <input type="number" id="rhrAvg" min="30" max="100" placeholder="e.g., 52 (from your wearable)" required>  
   
       <label for="sleepScore">Sleep Score (0-100):</label>  
-      <input type="number" id="sleepScore" min="0" max="100" placeholder="e.g., 85 (from your wearable)">  
-    
+      <input type="number" id="sleepScore" min="0" max="100" placeholder="e.g., 85 (from your wearable)" required>  
+  
       <label for="legFeel">How do your legs feel?</label>  
-      <select id="legFeel">  
-        <option value="very_fresh">Very Fresh - Ready to Go!</option>  
+      <select id="legFeel" required>  
+        <option value="">Select...</option> <option value="very_fresh">Very Fresh - Ready to Go!</option>  
         <option value="fresh">Fresh - Good to go</option>  
         <option value="normal" selected>Normal - No strong feeling</option>  
         <option value="tired">Tired - Legs feel heavy</option>  
         <option value="very_tired">Very Tired - Need a break</option>  
       </select>  
-    
+  
       <label for="duration">Training Duration (minutes):</label>  
-      <input type="number" id="duration" min="10" placeholder="e.g., 60" aria-describedby="duration-help">  
+      <input type="number" id="duration" min="10" placeholder="e.g., 60" aria-describedby="duration-help" required>  
       <small id="duration-help">Minimum 10 minutes.</small>  
-        
+  
       <label for="rideType">Ride Type:</label>  
-      <select id="rideType">  
-        <option value="climb">Climbing Day</option>  
+      <select id="rideType" required>  
+        <option value="">Select...</option> <option value="climb">Climbing Day</option>  
         <option value="endurance">Endurance Ride</option>  
         <option value="recovery">Recovery Ride</option>  
         <option value="interval">Interval/Tempo Session</option>  
@@ -50,20 +59,22 @@
       </select>  
   
       <label for="mentalFocus">Mental Focus:</label>  
-      <select id="mentalFocus">  
-        <option value="sharp">Sharp - Laser focused</option>  
+      <select id="mentalFocus" required>  
+        <option value="">Select...</option> <option value="sharp">Sharp - Laser focused</option>  
         <option value="okay" selected>Okay - Average concentration</option>  
         <option value="dull">Dull - Distracted / Fatigued</option>  
       </select>  
-    
+  
       <button id="getTipButton">Get My Breath Tip</button>  
+      <div id="saveFeedback" class="feedback-message" aria-live="polite"></div>  
+      <button id="saveDataButton">Save Ride Data</button>  
     </main>  
-    
+  
     <div id="result" aria-live="polite">  
       Enter your details and click 'Get My Breath Tip' to see a recommendation.  
     </div>  
   </div>  
-    
+  
   <script src="script.js"></script>  
 </body>  
 </html>
