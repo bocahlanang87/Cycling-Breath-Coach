@@ -1,240 +1,182 @@
 body {  
-    font-family: 'Poppins', sans-serif;  
-    background-color: #f0f2f5; /* Light grey background */  
+    font-family: 'Arial', sans-serif;  
+    background-color: #f4f7f6;  
     color: #333;  
     margin: 0;  
     padding: 20px;  
     display: flex;  
     justify-content: center;  
-    align-items: flex-start; /* Align to top */  
+    align-items: flex-start; /* Align to the top */  
     min-height: 100vh;  
     box-sizing: border-box;  
 }  
   
 .container {  
-    background-color: #fff;  
+    background-color: #ffffff;  
     padding: 30px;  
-    border-radius: 12px;  
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);  
+    border-radius: 10px;  
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);  
     width: 100%;  
     max-width: 500px;  
     box-sizing: border-box;  
-    animation: fadeIn 0.8s ease-out;  
-}  
-  
-@keyframes fadeIn {  
-    from { opacity: 0; transform: translateY(-20px); }  
-    to { opacity: 1; transform: translateY(0); }  
-}  
-  
-header {  
-    text-align: center;  
-    margin-bottom: 25px;  
+    margin-top: 20px; /* Add some space from the top */  
+    margin-bottom: 20px; /* Add some space at the bottom */  
 }  
   
 h1 {  
+    text-align: center;  
     color: #2c3e50;  
-    margin-bottom: 5px;  
-    font-size: 2em;  
+    margin-bottom: 25px;  
+    font-size: 1.8em;  
 }  
   
-.tagline {  
-    color: #7f8c8d;  
-    font-size: 0.95em;  
+.form-group {  
+    margin-bottom: 18px;  
 }  
   
-/* Updated selector for input elements based on your new HTML structure */  
-.input-form label {  
+label {  
     display: block;  
     margin-bottom: 8px;  
-    margin-top: 15px;  
-    font-weight: 600;  
-    color: #34495e;  
+    font-weight: bold;  
+    color: #555;  
 }  
   
-.input-form input[type="number"],  
-.input-form select {  
-    width: calc(100% - 20px); /* Adjusting for padding */  
-    padding: 12px;  
-    margin-bottom: 15px;  
+input[type="number"],  
+select {  
+    width: calc(100% - 20px);  
+    padding: 10px;  
     border: 1px solid #ddd;  
-    border-radius: 8px;  
+    border-radius: 5px;  
     font-size: 1em;  
     box-sizing: border-box;  
-    transition: border-color 0.3s ease;  
-    -webkit-appearance: none; /* Remove default select styling */  
-    -moz-appearance: none;  
-    appearance: none;  
-    background-color: #fff;  
-    cursor: pointer;  
+    transition: border-color 0.3s;  
 }  
   
-.input-form input[type="number"]:focus,  
-.input-form select:focus {  
-    border-color: #3498db; /* Blue focus highlight */  
+input[type="number"]:focus,  
+select:focus {  
+    border-color: #3498db;  
     outline: none;  
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);  
 }  
   
-.input-form small {  
+small {  
     display: block;  
-    margin-top: -10px;  
-    margin-bottom: 10px;  
-    color: #7f8c8d;  
+    margin-top: 5px;  
+    color: #777;  
     font-size: 0.85em;  
 }  
   
-/* Styling for both buttons */  
 button {  
     display: block;  
     width: 100%;  
-    padding: 15px;  
-    margin-top: 25px; /* Default margin-top for the first button (Get Tip) */  
+    padding: 12px 20px;  
+    margin-top: 20px;  
+    background-color: #28a745; /* Green for main action */  
     color: white;  
     border: none;  
-    border-radius: 8px;  
+    border-radius: 5px;  
     font-size: 1.1em;  
-    font-weight: 600;  
     cursor: pointer;  
-    transition: background-color 0.3s ease, transform 0.2s ease;  
+    transition: background-color 0.3s ease;  
 }  
   
-/* Specific style for the Get Tip button */  
-#getTipButton {  
-    background-color: #27ae60; /* Green for go */  
+button#saveDataButton {  
+    background-color: #007bff; /* Blue for save action */  
+    margin-top: 10px; /* Less margin than the first button */  
 }  
   
-#getTipButton:hover {  
-    background-color: #229a54;  
-    transform: translateY(-2px);  
+button:hover {  
+    opacity: 0.9;  
 }  
   
-#getTipButton:active {  
-    transform: translateY(0);  
-}  
-  
-/* Specific style for the Save Data button */  
-#saveDataButton {  
-    background-color: #3498db; /* Blue for save */  
-    margin-top: 15px; /* Space between the two buttons */  
-}  
-  
-#saveDataButton:hover {  
-    background-color: #2980b9;  
-    transform: translateY(-2px);  
-}  
-  
-#saveDataButton:active {  
-    transform: translateY(0);  
-}  
-  
-  
-/* Updated selector for result box based on your new HTML structure */  
-#result {  
+.result {  
     margin-top: 30px;  
     padding: 20px;  
-    border-radius: 10px;  
-    background-color: #ecf0f1; /* Light grey background for results */  
-    border: 1px solid #dcdcdc;  
-    text-align: left;  
+    border-radius: 8px;  
+    background-color: #e9f5f9; /* Default light blue */  
+    border: 1px solid #cce7ed;  
+    color: #333;  
     line-height: 1.6;  
-    animation: slideIn 0.5s ease-out;  
+    font-size: 0.95em;  
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);  
 }  
   
-@keyframes slideIn {  
-    from { opacity: 0; transform: translateY(20px); }  
-    to { opacity: 1; transform: translateY(0); }  
-}  
-  
-#result h2 {  
+.result h2 {  
     color: #2c3e50;  
     margin-top: 0;  
-    font-size: 1.6em;  
+    font-size: 1.5em;  
+    border-bottom: 1px solid #eee;  
+    padding-bottom: 10px;  
+    margin-bottom: 15px;  
 }  
   
-#result p {  
-    margin-bottom: 8px;  
-    font-size: 0.95em;  
+.result h3 {  
+    color: #34495e;  
+    font-size: 1.2em;  
+    margin-top: 20px;  
+    margin-bottom: 10px;  
 }  
   
-/* Specific classes for result styling based on outcome (used by JS) */  
-.result.warning {  
-    background-color: #fff3cd;  
-    border-color: #ffeeba;  
-    color: #664d03;  
+.result p {  
+    margin-bottom: 10px;  
 }  
   
-.result.success {  
-    background-color: #d1e7dd;  
-    border-color: #badbcc;  
-    color: #0f5132;  
+.result strong {  
+    color: #2c3e50;  
 }  
   
+/* Specific result classes for visual feedback */  
 .result.danger {  
-    background-color: #f8d7da;  
-    border-color: #f5c2c7;  
-    color: #842029;  
+    background-color: #fcebeb; /* Light red */  
+    border-color: #e0b4b4;  
+    color: #a94442;  
+}  
+  
+.result.warning {  
+    background-color: #fff3cd; /* Light yellow */  
+    border-color: #ffeeba;  
+    color: #856404;  
 }  
   
 .result.info {  
-    background-color: #dbeafe;  
-    border-color: #bae6fd;  
-    color: #084298;  
+    background-color: #d1ecf1; /* Light cyan */  
+    border-color: #bee5eb;  
+    color: #0c5460;  
 }  
   
-/* Styles for the live feedback message */  
+.result.success {  
+    background-color: #d4edda; /* Light green */  
+    border-color: #c3e6cb;  
+    color: #155724;  
+}  
+  
+/* Feedback message for saving data */  
 .feedback-message {  
-    text-align: center;  
+    padding: 10px;  
     margin-top: 15px;  
-    padding: 8px;  
-    border-radius: 6px;  
-    font-size: 0.9em;  
-    font-weight: 500;  
-    opacity: 0; /* Hidden by default */  
-    transition: opacity 0.3s ease-in-out;  
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Added a subtle shadow */  
+    border-radius: 5px;  
+    text-align: center;  
+    font-weight: bold;  
+    display: none; /* Hidden by default */  
+    opacity: 0;  
+    transition: opacity 0.5s ease-in-out;  
 }  
   
 .feedback-message.show {  
-    opacity: 1; /* Show when 'show' class is added */  
+    display: block;  
+    opacity: 1;  
 }  
   
 .feedback-message.saving {  
-    background-color: #e3f2fd; /* Light blue */  
-    color: #2196F3;  
-    border: 1px solid #90caf9;  
+    background-color: #e0f2f7; /* Light blue for saving */  
+    color: #2196f3;  
 }  
   
 .feedback-message.success-save {  
-    background-color: #d1e7dd; /* Light green (matches .result.success) */  
+    background-color: #d4edda; /* Light green for success */  
     color: #28a745;  
-    border: 1px solid #badbcc;  
 }  
   
 .feedback-message.error-save {  
-    background-color: #f8d7da; /* Light red (matches .result.danger) */  
+    background-color: #fcebeb; /* Light red for error */  
     color: #dc3545;  
-    border: 1px solid #f5c2c7;  
-}  
-  
-  
-/* Responsive Adjustments */  
-@media (max-width: 600px) {  
-    body {  
-        padding: 10px;  
-    }  
-    .container {  
-        padding: 20px;  
-        border-radius: 8px;  
-    }  
-    h1 {  
-        font-size: 1.8em;  
-    }  
-    button {  
-        padding: 12px;  
-        font-size: 1em;  
-    }  
-    #result {  
-        padding: 15px;  
-    }  
 }
