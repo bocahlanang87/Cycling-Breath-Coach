@@ -1,6 +1,6 @@
 body {  
     font-family: 'Poppins', sans-serif;  
-    background-color: #f0f2f5;  
+    background-color: #f0f2f5; /* Light grey background */  
     color: #333;  
     margin: 0;  
     padding: 20px;  
@@ -43,6 +43,7 @@ h1 {
     font-size: 0.95em;  
 }  
   
+/* Updated selector for input elements based on your new HTML structure */  
 .input-form label {  
     display: block;  
     margin-bottom: 8px;  
@@ -53,7 +54,7 @@ h1 {
   
 .input-form input[type="number"],  
 .input-form select {  
-    width: calc(100% - 20px);  
+    width: calc(100% - 20px); /* Adjusting for padding */  
     padding: 12px;  
     margin-bottom: 15px;  
     border: 1px solid #ddd;  
@@ -61,11 +62,16 @@ h1 {
     font-size: 1em;  
     box-sizing: border-box;  
     transition: border-color 0.3s ease;  
+    -webkit-appearance: none; /* Remove default select styling */  
+    -moz-appearance: none;  
+    appearance: none;  
+    background-color: #fff;  
+    cursor: pointer;  
 }  
   
 .input-form input[type="number"]:focus,  
 .input-form select:focus {  
-    border-color: #3498db;  
+    border-color: #3498db; /* Blue focus highlight */  
     outline: none;  
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);  
 }  
@@ -78,12 +84,12 @@ h1 {
     font-size: 0.85em;  
 }  
   
+/* Styling for both buttons */  
 button {  
     display: block;  
     width: 100%;  
     padding: 15px;  
-    margin-top: 25px;  
-    background-color: #27ae60; /* Green for go */  
+    margin-top: 25px; /* Default margin-top for the first button (Get Tip) */  
     color: white;  
     border: none;  
     border-radius: 8px;  
@@ -93,20 +99,42 @@ button {
     transition: background-color 0.3s ease, transform 0.2s ease;  
 }  
   
-button:hover {  
+/* Specific style for the Get Tip button */  
+#getTipButton {  
+    background-color: #27ae60; /* Green for go */  
+}  
+  
+#getTipButton:hover {  
     background-color: #229a54;  
     transform: translateY(-2px);  
 }  
   
-button:active {  
+#getTipButton:active {  
     transform: translateY(0);  
 }  
   
+/* Specific style for the Save Data button */  
+#saveDataButton {  
+    background-color: #3498db; /* Blue for save */  
+    margin-top: 15px; /* Space between the two buttons */  
+}  
+  
+#saveDataButton:hover {  
+    background-color: #2980b9;  
+    transform: translateY(-2px);  
+}  
+  
+#saveDataButton:active {  
+    transform: translateY(0);  
+}  
+  
+  
+/* Updated selector for result box based on your new HTML structure */  
 #result {  
     margin-top: 30px;  
     padding: 20px;  
     border-radius: 10px;  
-    background-color: #ecf0f1;  
+    background-color: #ecf0f1; /* Light grey background for results */  
     border: 1px solid #dcdcdc;  
     text-align: left;  
     line-height: 1.6;  
@@ -129,7 +157,7 @@ button:active {
     font-size: 0.95em;  
 }  
   
-/* Specific classes for result styling based on outcome */  
+/* Specific classes for result styling based on outcome (used by JS) */  
 .result.warning {  
     background-color: #fff3cd;  
     border-color: #ffeeba;  
@@ -153,6 +181,42 @@ button:active {
     border-color: #bae6fd;  
     color: #084298;  
 }  
+  
+/* Styles for the live feedback message */  
+.feedback-message {  
+    text-align: center;  
+    margin-top: 15px;  
+    padding: 8px;  
+    border-radius: 6px;  
+    font-size: 0.9em;  
+    font-weight: 500;  
+    opacity: 0; /* Hidden by default */  
+    transition: opacity 0.3s ease-in-out;  
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Added a subtle shadow */  
+}  
+  
+.feedback-message.show {  
+    opacity: 1; /* Show when 'show' class is added */  
+}  
+  
+.feedback-message.saving {  
+    background-color: #e3f2fd; /* Light blue */  
+    color: #2196F3;  
+    border: 1px solid #90caf9;  
+}  
+  
+.feedback-message.success-save {  
+    background-color: #d1e7dd; /* Light green (matches .result.success) */  
+    color: #28a745;  
+    border: 1px solid #badbcc;  
+}  
+  
+.feedback-message.error-save {  
+    background-color: #f8d7da; /* Light red (matches .result.danger) */  
+    color: #dc3545;  
+    border: 1px solid #f5c2c7;  
+}  
+  
   
 /* Responsive Adjustments */  
 @media (max-width: 600px) {  
