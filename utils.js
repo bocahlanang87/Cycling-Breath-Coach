@@ -40,25 +40,34 @@ export function getCombinedReadinessScore(legFeel, rhrToday, rhrAvg, sleepScore,
     return (score / 10).toFixed(2);  
 }  
   
-export function manageBreathHistory(currentBreathTip, rideType) {  
+// MODIFIED: Added shouldRecord parameter  
+export function manageBreathHistory(currentBreathTip, rideType, shouldRecord = false) {  
     const today = new Date().toISOString().split('T')[0];  
     let history = JSON.parse(localStorage.getItem('breathTipHistory')) || [];  
+    // Filter out old entries  
     history = history.filter(entry => entry.date >= new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]);  
+  
     const isHighIntensityBreath = currentBreathTip.includes('2-in / 2-out') || currentBreathTip.includes('Explosive') || currentBreathTip.includes('Powerful Intervals') || currentBreathTip.includes('Surge Mode');  
+  
+    // Logic to check for override (always runs to provide feedback)  
     if (isHighIntensityBreath) {  
         const recentHighIntensityDays = new Set();  
         for (const entry of history) { if (entry.date !== today && entry.isHighIntensity) { recentHighIntensityDays.add(entry.date); }}  
         if (recentHighIntensityDays.size >= 2) {  
             const alternativeTip = "Controlled Breathing: 4-in / 4-out (nasal, steady effort).";  
-            history.push({ date: today, rideType: rideType, breathTip: alternativeTip, isHighIntensity: false });  
-            localStorage.setItem('breathTipHistory', JSON.stringify(history));  
+            // Return the override, but don't record here if shouldRecord is false  
             return { override: true, warning: "You've been consistently using high-intensity breathing for the past two days. Consider a more moderate approach today to aid recovery and prevent overtraining.", alternativeBreath: alternativeTip };  
         }  
     }  
-    const alreadyLoggedToday = history.some(entry => entry.date === today && entry.breathTip === currentBreathTip);  
-    if (!isHighIntensityBreath || (isHighIntensityBreath && !alreadyLoggedToday)) {  
-        history.push({ date: today, rideType: rideType, breathTip: currentBreathTip, isHighIntensity: isHighIntensityBreath });  
-        localStorage.setItem('breathTipHistory', JSON.stringify(history));  
+  
+    // Only record history if shouldRecord is explicitly true  
+    if (shouldRecord) {  
+        const alreadyLoggedToday = history.some(entry => entry.date === today && entry.breathTip === currentBreathTip);  
+        if (!isHighIntensityBreath || (isHighIntensityBreath && !alreadyLoggedToday)) {  
+            history.push({ date: today, rideType: rideType, breathTip: currentBreathTip, isHighIntensity: isHighIntensityBreath });  
+            localStorage.setItem('breathTipHistory', JSON.stringify(history));  
+        }  
     }  
-    return { override: false };  
+  
+    return { override: false }; // Return default if no override  
 }
