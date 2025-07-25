@@ -14,6 +14,7 @@ const getTipButton = document.getElementById('getTipButton');
 const saveFeedbackDiv = document.getElementById('saveFeedback');  
 const saveDataButton = document.getElementById('saveDataButton');  
   
+// REPLACE THIS WITH YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL  
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbznSAcfk0kB0DV-BX_x_rM-KCnNeRjjqIDNIHwZbyWdS0zSgDRW61cnLyzO8akjSIG7/exec";  
   
 async function sendDataToGoogleSheet(data) {  
@@ -24,8 +25,7 @@ async function sendDataToGoogleSheet(data) {
         saveFeedbackDiv.textContent = '✅ Data saved to sheet!';  
         saveFeedbackDiv.className = 'feedback-message show success-save';  
   
-        // NEW: Only save breath history after successful submission  
-        // data.breathTip and data.rideType are available here from the getRecommendation return  
+        // Only save breath history after successful submission  
         manageBreathHistory(data.breathTip, data.rideType, true);  
   
     } catch (error) {  
@@ -36,8 +36,8 @@ async function sendDataToGoogleSheet(data) {
 }  
   
 function getRecommendation() {  
-    resultDiv.innerHTML = 'Enter your details and click \'Get My Breath Tip\' to see a recommendation.';  
-    resultDiv.className = 'result';  
+    resultDiv.innerHTML = '<p>Enter your details and click \'Get My Personalized Breath Plan\' to receive tailored advice.</p>';  
+    resultDiv.className = 'result'; // Reset classes  
     const rhrToday = parseInt(rhrTodayInput.value);  
     const rhrAvg = parseInt(rhrAvgInput.value);  
     const sleepScore = parseInt(sleepScoreInput.value);  
@@ -73,8 +73,7 @@ function getRecommendation() {
     if (!recommendation && config.default) recommendation = config.default;  
     if (!recommendation) { recommendation = { mainBreath: "General: 4-in / 4-out (nasal)", easyBreath: "Calming: 4-in / 6-out", tip: "Focus on smooth, consistent breathing. Always listen to your body.", outputClass: "info", bonusTip: "" }; }  
   
-    // MODIFIED: Call manageBreathHistory with shouldRecord = false (only for checking/overrides, not saving)  
-    const historyCheck = manageBreathHistory(recommendation.mainBreath, rideType, false);  
+    const historyCheck = manageBreathHistory(recommendation.mainBreath, rideType, false); // Only check history, don't record here  
   
     let finalBreathTip = recommendation.mainBreath;  
     let finalOverallTip = recommendation.tip;  
@@ -85,15 +84,15 @@ function getRecommendation() {
     const isRHRHigh = isRHRCriticallyElevated(rhrToday, rhrAvg, 8);  
     if (isRHRHigh) {  
         warningMessageHtml += `<p class="danger">🚨 Your RHR is significantly elevated today. This is a strong indicator of fatigue or illness. Consider taking a full rest day or engaging in very light active recovery only, regardless of other metrics.</p>`;  
-        finalOutputClass = 'danger';  
+        finalOutputClass = 'danger'; // Overwrite output class to danger if RHR is critical  
         finalOverallTip = "Critical RHR Elevation Detected. " + finalOverallTip;  
     }  
   
     if (historyCheck.override) {  
         finalBreathTip = historyCheck.alternativeBreath;  
         finalOverallTip = historyCheck.warning + " " + finalOverallTip;  
-        finalOutputClass = 'warning';  
-        finalBonusTip = '';  
+        finalOutputClass = 'warning'; // Override output class to warning if history suggests caution  
+        finalBonusTip = ''; // Clear bonus tip as override is more urgent  
         warningMessageHtml += `<p class="warning">⚠️ ${historyCheck.warning}</p>`;  
     }  
   
@@ -104,11 +103,13 @@ function getRecommendation() {
         <h3>Recommended Breath Plan:</h3>  
         <p><span id="mainBreathOutput">💨 ${finalBreathTip || 'N/A'}</span></p>  
     `;  
-    if (recommendation.easyBreath && !historyCheck.override) { outputHtml += `<p>🫁 Warm-up & Cool-down: ${recommendation.easyBreath}</p>`; }  
+    if (recommendation.easyBreath && !historyCheck.override && finalBreathTip !== recommendation.easyBreath) { // Avoid showing easyBreath if it's the same as main or overridden  
+        outputHtml += `<p>🫁 Warm-up & Cool-down: ${recommendation.easyBreath}</p>`;  
+    }  
     outputHtml += `<p><strong>Tips:</strong> <span id="tipOutput">${finalOverallTip || 'No specific tips.'}</span></p>`;  
     if (finalBonusTip) { outputHtml += `<p>💡 <strong>Bonus Tip:</strong> ${finalBonusTip}</p>`; }  
     outputHtml += `<p>*Based on your inputs. Always listen to your body.</p>`;  
-    outputHtml += `<p>Your Combined Readiness Score: ${combinedReadinessScore}</p>`;  
+    outputHtml += `<p>Your Combined Readiness Score: <strong>${combinedReadinessScore}</strong></p>`;  
   
     resultDiv.innerHTML = outputHtml;  
     resultDiv.classList.add('result', finalOutputClass || 'info');  
@@ -123,8 +124,38 @@ function getRecommendation() {
     };  
 }  
   
+// Event Listeners  
 getTipButton.addEventListener('click', () => { getRecommendation(); });  
+  
 saveDataButton.addEventListener('click', async () => {  
+    // Before saving, ensure a recommendation has been generated and is valid  
     const dataToSave = getRecommendation();  
-    if (dataToSave) await sendDataToGoogleSheet(dataToSave);  
+    if (dataToSave) {  
+        // Confirm that the basic validation passed before sending data  
+        const currentResultClass = resultDiv.classList;  
+        if (!currentResultClass.contains('danger') && !currentResultClass.contains('warning')) {  
+             await sendDataToGoogleSheet(dataToSave);  
+        } else {  
+             saveFeedbackDiv.textContent = '❗ Please resolve input errors before saving.';  
+             saveFeedbackDiv.className = 'feedback-message show error-save';  
+             setTimeout(() => { saveFeedbackDiv.classList.remove('show'); saveFeedbackDiv.textContent = ''; }, 3000);  
+        }  
+    }  
+});  
+  
+// Optional: Auto-fill duration and mental focus if ride type is 'rest_day'  
+rideTypeSelect.addEventListener('change', () => {  
+    if (rideTypeSelect.value === 'rest_day') {  
+        durationInput.value = 0;  
+        durationInput.setAttribute('disabled', 'true');  
+        mentalFocusSelect.value = 'N/A'; // Assuming 'N/A' is a valid option or handled  
+        mentalFocusSelect.setAttribute('disabled', 'true');  
+    } else {  
+        durationInput.removeAttribute('disabled');  
+        // Reset mentalFocus if it was set to N/A and is now enabled  
+        if (mentalFocusSelect.value === 'N/A') {  
+            mentalFocusSelect.value = ''; // Or a default like 'okay'  
+        }  
+        mentalFocusSelect.removeAttribute('disabled');  
+    }  
 });
