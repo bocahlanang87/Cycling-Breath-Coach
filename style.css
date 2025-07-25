@@ -1,164 +1,256 @@
+:root {  
+    /* Premium Color Palette */  
+    --color-background: #1A1A2E; /* Deep Dark Blue/Purple */  
+    --color-container: #242540; /* Slightly lighter dark */  
+    --color-text-primary: #E0E0E0; /* Soft White */  
+    --color-text-secondary: #B0B0B0; /* Light Gray for hints */  
+    --color-border: #4A4B7A; /* Subtle border color */  
+  
+    /* Accent Colors */  
+    --color-accent-teal: #34D399; /* Vibrant Teal/Green for success/accents */  
+    --color-accent-blue: #60A5FA; /* Bright Sky Blue for main actions */  
+    --color-accent-purple: #A78BFA; /* Purple for save button */  
+  
+    /* Feedback Colors */  
+    --color-feedback-danger-bg: #4B1A1A;  
+    --color-feedback-danger-border: #8A2D2D;  
+    --color-feedback-danger-text: #EF4444;  
+  
+    --color-feedback-warning-bg: #4A3E1A;  
+    --color-feedback-warning-border: #8A6D2D;  
+    --color-feedback-warning-text: #FBBF24;  
+  
+    --color-feedback-info-bg: #2D3D4A;  
+    --color-feedback-info-border: #4A6D8A;  
+    --color-feedback-info-text: #60A5FA;  
+  
+    --color-feedback-success-bg: #1A4A2E;  
+    --color-feedback-success-border: #2D8A4A;  
+    --color-feedback-success-text: #34D399;  
+}  
+  
 body {  
-    font-family: 'Arial', sans-serif;  
-    background-color: #f4f7f6;  
-    color: #333;  
+    font-family: 'Lato', sans-serif;  
     margin: 0;  
     padding: 20px;  
+    background: linear-gradient(135deg, var(--color-background), #2B2B4F); /* Subtle gradient background */  
+    color: var(--color-text-primary);  
     display: flex;  
     justify-content: center;  
-    align-items: flex-start; /* Align to the top */  
+    align-items: center;  
     min-height: 100vh;  
     box-sizing: border-box;  
 }  
   
 .container {  
-    background-color: #ffffff;  
-    padding: 30px;  
-    border-radius: 10px;  
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);  
+    background-color: var(--color-container);  
+    padding: 40px;  
+    border-radius: 12px;  
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4); /* Deeper, softer shadow */  
+    max-width: 600px;  
     width: 100%;  
-    max-width: 500px;  
     box-sizing: border-box;  
-    margin-top: 20px; /* Add some space from the top */  
-    margin-bottom: 20px; /* Add some space at the bottom */  
 }  
   
 h1 {  
+    font-family: 'Montserrat', sans-serif;  
+    font-weight: 700;  
+    font-size: 2.4em;  
+    color: var(--color-accent-blue);  
     text-align: center;  
-    color: #2c3e50;  
-    margin-bottom: 25px;  
-    font-size: 1.8em;  
+    margin-bottom: 15px;  
+    letter-spacing: 1.2px;  
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);  
+}  
+  
+.tagline {  
+    text-align: center;  
+    color: var(--color-text-secondary);  
+    font-size: 1.1em;  
+    margin-bottom: 35px;  
+    font-weight: 300;  
 }  
   
 .form-group {  
-    margin-bottom: 18px;  
+    margin-bottom: 25px;  
 }  
   
 label {  
     display: block;  
-    margin-bottom: 8px;  
-    font-weight: bold;  
-    color: #555;  
+    margin-bottom: 10px;  
+    color: var(--color-text-primary);  
+    font-weight: 600;  
+    font-size: 1.05em;  
 }  
   
 input[type="number"],  
 select {  
-    width: calc(100% - 20px);  
-    padding: 10px;  
-    border: 1px solid #ddd;  
-    border-radius: 5px;  
+    width: calc(100% - 24px); /* Account for padding */  
+    padding: 12px;  
+    border: 1px solid var(--color-border);  
+    border-radius: 8px;  
+    background-color: #313251; /* Darker input background */  
+    color: var(--color-text-primary);  
     font-size: 1em;  
-    box-sizing: border-box;  
-    transition: border-color 0.3s;  
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;  
+    -webkit-appearance: none; /* Remove default styling on some browsers */  
+    -moz-appearance: none;  
+    appearance: none;  
 }  
   
 input[type="number"]:focus,  
 select:focus {  
-    border-color: #3498db;  
+    border-color: var(--color-accent-blue);  
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5); /* Soft glow */  
     outline: none;  
 }  
   
 small {  
     display: block;  
     margin-top: 5px;  
-    color: #777;  
+    color: var(--color-text-secondary);  
     font-size: 0.85em;  
 }  
   
 button {  
     display: block;  
     width: 100%;  
-    padding: 12px 20px;  
-    margin-top: 20px;  
-    background-color: #28a745; /* Green for main action */  
-    color: white;  
+    padding: 15px 25px;  
     border: none;  
-    border-radius: 5px;  
-    font-size: 1.1em;  
+    border-radius: 8px;  
+    font-family: 'Montserrat', sans-serif;  
+    font-size: 1.15em;  
+    font-weight: 700;  
     cursor: pointer;  
-    transition: background-color 0.3s ease;  
+    text-transform: uppercase;  
+    letter-spacing: 0.8px;  
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);  
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;  
+    color: white; /* Ensure text is white */  
+}  
+  
+button#getTipButton {  
+    background: linear-gradient(45deg, var(--color-accent-blue), var(--color-accent-teal));  
+    margin-top: 30px;  
+}  
+  
+button#getTipButton:hover {  
+    transform: translateY(-3px);  
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);  
 }  
   
 button#saveDataButton {  
-    background-color: #007bff; /* Blue for save action */  
-    margin-top: 10px; /* Less margin than the first button */  
+    background: linear-gradient(45deg, var(--color-accent-purple), #8B5CF6); /* Different gradient for save */  
+    margin-top: 25px;  
+    font-size: 1.05em; /* Slightly smaller than main button */  
+    padding: 12px 20px;  
 }  
   
-button:hover {  
-    opacity: 0.9;  
+button#saveDataButton:hover {  
+    transform: translateY(-2px);  
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.3);  
 }  
   
 .result {  
-    margin-top: 30px;  
-    padding: 20px;  
-    border-radius: 8px;  
-    background-color: #e9f5f9; /* Default light blue */  
-    border: 1px solid #cce7ed;  
-    color: #333;  
-    line-height: 1.6;  
-    font-size: 0.95em;  
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);  
+    margin-top: 40px;  
+    padding: 25px;  
+    border-radius: 10px;  
+    background-color: #313251; /* Darker background */  
+    border: 1px solid var(--color-border);  
+    color: var(--color-text-primary);  
+    line-height: 1.7;  
+    font-size: 1em;  
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.15); /* Inner shadow for depth */  
+    transition: all 0.5s ease-in-out; /* Smooth transition for result changes */  
 }  
   
 .result h2 {  
-    color: #2c3e50;  
-    margin-top: 0;  
-    font-size: 1.5em;  
-    border-bottom: 1px solid #eee;  
-    padding-bottom: 10px;  
-    margin-bottom: 15px;  
+    font-family: 'Montserrat', sans-serif;  
+    color: var(--color-accent-blue);  
+    font-size: 1.7em;  
+    border-bottom: 1px solid var(--color-border);  
+    padding-bottom: 12px;  
+    margin-bottom: 20px;  
+    font-weight: 700;  
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);  
 }  
   
 .result h3 {  
-    color: #34495e;  
-    font-size: 1.2em;  
-    margin-top: 20px;  
-    margin-bottom: 10px;  
+    font-family: 'Montserrat', sans-serif;  
+    color: var(--color-accent-teal);  
+    font-size: 1.4em;  
+    margin-top: 25px;  
+    margin-bottom: 12px;  
+    font-weight: 600;  
+}  
+  
+#mainBreathOutput {  
+    font-size: 1.4em;  
+    color: var(--color-text-primary);  
+    font-weight: 700;  
+    background-color: #4A4B7A; /* Highlight background */  
+    padding: 8px 12px;  
+    border-radius: 5px;  
+    display: inline-block; /* To apply padding/background correctly */  
+    margin-top: 5px;  
 }  
   
 .result p {  
     margin-bottom: 10px;  
 }  
-  
-.result strong {  
-    color: #2c3e50;  
+.result p:last-child {  
+    margin-bottom: 0;  
 }  
   
-/* Specific result classes for visual feedback */  
+/* Specific result class styles for visual feedback */  
 .result.danger {  
-    background-color: #fcebeb; /* Light red */  
-    border-color: #e0b4b4;  
-    color: #a94442;  
+    background-color: var(--color-feedback-danger-bg);  
+    border-color: var(--color-feedback-danger-border);  
+    color: var(--color-feedback-danger-text);  
+}  
+.result.danger h2, .result.danger h3 {  
+    color: var(--color-feedback-danger-text);  
 }  
   
 .result.warning {  
-    background-color: #fff3cd; /* Light yellow */  
-    border-color: #ffeeba;  
-    color: #856404;  
+    background-color: var(--color-feedback-warning-bg);  
+    border-color: var(--color-feedback-warning-border);  
+    color: var(--color-feedback-warning-text);  
+}  
+.result.warning h2, .result.warning h3 {  
+    color: var(--color-feedback-warning-text);  
 }  
   
 .result.info {  
-    background-color: #d1ecf1; /* Light cyan */  
-    border-color: #bee5eb;  
-    color: #0c5460;  
+    background-color: var(--color-feedback-info-bg);  
+    border-color: var(--color-feedback-info-border);  
+    color: var(--color-feedback-info-text);  
+}  
+.result.info h2, .result.info h3 {  
+    color: var(--color-feedback-info-text);  
 }  
   
 .result.success {  
-    background-color: #d4edda; /* Light green */  
-    border-color: #c3e6cb;  
-    color: #155724;  
+    background-color: var(--color-feedback-success-bg);  
+    border-color: var(--color-feedback-success-border);  
+    color: var(--color-feedback-success-text);  
+}  
+.result.success h2, .result.success h3 {  
+    color: var(--color-feedback-success-text);  
 }  
   
-/* Feedback message for saving data */  
+  
+/* Save Feedback Messages */  
 .feedback-message {  
-    padding: 10px;  
-    margin-top: 15px;  
-    border-radius: 5px;  
     text-align: center;  
-    font-weight: bold;  
+    padding: 10px;  
+    margin-top: 20px;  
+    border-radius: 8px;  
+    font-weight: 600;  
+    font-size: 1em;  
     display: none; /* Hidden by default */  
     opacity: 0;  
-    transition: opacity 0.5s ease-in-out;  
+    transition: opacity 0.4s ease-in-out;  
 }  
   
 .feedback-message.show {  
@@ -167,16 +259,19 @@ button:hover {
 }  
   
 .feedback-message.saving {  
-    background-color: #e0f2f7; /* Light blue for saving */  
-    color: #2196f3;  
+    background-color: var(--color-feedback-info-bg);  
+    color: var(--color-feedback-info-text);  
+    border: 1px solid var(--color-feedback-info-border);  
 }  
   
 .feedback-message.success-save {  
-    background-color: #d4edda; /* Light green for success */  
-    color: #28a745;  
+    background-color: var(--color-feedback-success-bg);  
+    color: var(--color-feedback-success-text);  
+    border: 1px solid var(--color-feedback-success-border);  
 }  
   
 .feedback-message.error-save {  
-    background-color: #fcebeb; /* Light red for error */  
-    color: #dc3545;  
+    background-color: var(--color-feedback-danger-bg);  
+    color: var(--color-feedback-danger-text);  
+    border: 1px solid var(--color-feedback-danger-border);  
 }
