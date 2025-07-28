@@ -47,13 +47,16 @@ function getRecommendation() {
     let mentalFocus = mentalFocusSelect.value;
     const offRideActivity = offRideActivitySelect.value;
 
+    // --- Start of input validation checks that return null if failed ---
     if (isNaN(rhrToday) || rhrToday < 30 || rhrToday > 100) { resultDiv.innerHTML = "<p class='danger'>❗ Please enter a valid RHR Today (30-100 bpm).</p>"; resultDiv.classList.add('danger'); rhrTodayInput.focus(); return null; }
     if (isNaN(rhrAvg) || rhrAvg < 30 || rhrAvg > 100) { resultDiv.innerHTML = "<p class='danger'>❗ Please enter a valid RHR 7-Day Avg (30-100 bpm).</p>"; resultDiv.classList.add('danger'); rhrAvgInput.focus(); return null; }
     if (isNaN(sleepScore) || sleepScore < 0 || sleepScore > 100) { resultDiv.innerHTML = "<p class='danger'>❗ Please enter a valid Sleep Score (0-100).</p>"; resultDiv.classList.add('danger'); sleepScoreInput.focus(); return null; }
     if (!legFeel) { resultDiv.innerHTML = "<p class='danger'>❗ Please select how your legs feel.</p>"; resultDiv.classList.add('danger'); legFeelSelect.focus(); return null; }
     if (!rideType) { resultDiv.innerHTML = "<p class='danger'>❗ Please select a Ride Type.</p>"; resultDiv.classList.add('danger'); rideTypeSelect.focus(); return null; }
     if (!offRideActivity) { resultDiv.innerHTML = "<p class='danger'>❗ Please select today's off-bike activity.</p>"; resultDiv.classList.add('danger'); offRideActivitySelect.focus(); return null; }
-    if (Math.abs(rhrToday - rhrAvg) > 30) { resultDiv.innerHTML = "<p class='warning'>❗ Your current RHR seems extreme compared to your average. Please recheck your input.</p>"; resultDiv.classList.add('warning'); rhrTodayInput.focus(); return null; }
+    // This next check (RHR difference) produces a 'warning' but does NOT return null.
+    // This is the kind of 'danger' you want to save.
+    if (Math.abs(rhrToday - rhrAvg) > 30) { resultDiv.innerHTML = "<p class='warning'>❗ Your current RHR seems extreme compared to your average. Please recheck your input.</p>"; resultDiv.classList.add('warning'); rhrTodayInput.focus(); /* Do NOT return null here */ }
 
     if (rideType === 'rest_day') {
         duration = 0;
@@ -62,6 +65,8 @@ function getRecommendation() {
         if (isNaN(duration) || duration < 10) { resultDiv.innerHTML = "<p class='danger'>❗ Please enter a valid Training Duration (at least 10 minutes).</p>"; resultDiv.classList.add('danger'); durationInput.focus(); return null; }
         if (!mentalFocus) { resultDiv.innerHTML = "<p class='danger'>❗ Please select your Mental Focus.</p>"; resultDiv.classList.add('danger'); mentalFocusSelect.focus(); return null; }
     }
+    // --- End of input validation checks that return null if failed ---
+
 
     const { status: fatigueStatus, tip: fatigueOverallTip, lookupKey: fatigueLookupKey } = getFatigueStatus(rhrToday, rhrAvg, sleepScore);
     const combinedReadinessScore = getCombinedReadinessScore(legFeel, rhrToday, rhrAvg, sleepScore, mentalFocus);
@@ -128,21 +133,27 @@ function getRecommendation() {
 getTipButton.addEventListener('click', () => { getRecommendation(); });
 
 saveDataButton.addEventListener('click', async () => {
-    // Before saving, ensure a recommendation has been generated and is valid
-    const dataToSave = getRecommendation(); // This also updates the UI with any warnings/dangers
+    // Attempt to get the recommendation data.
+    // If fundamental input validation fails (e.g., NaN for RHR, or empty required selects),
+    // getRecommendation() will return null and display an error message.
+    const dataToSave = getRecommendation();
 
+    // --- MODIFIED SECTION START ---
     if (dataToSave) {
-        // --- START OF MODIFIED SECTION ---
-        // Removed the conditional check for 'danger' or 'warning' classes.
-        // Data will now be sent to Google Sheet as long as getRecommendation()
-        // successfully returns a data object (i.e., fundamental input validations passed).
+        // If dataToSave is NOT null, it means all basic inputs were valid,
+        // and a data object was successfully constructed.
+        // We will now proceed to save this data, REGARDLESS of whether
+        // the recommendation itself includes 'danger' or 'warning' flags.
         await sendDataToGoogleSheet(dataToSave);
-        // --- END OF MODIFIED SECTION ---
+    } else {
+        // This 'else' block will ONLY execute if getRecommendation() returned null.
+        // This indicates essential input fields are invalid or empty,
+        // and thus, there's no meaningful data structure to save.
+        saveFeedbackDiv.textContent = '❗ Please fill in all required fields and correct basic input errors (e.g., valid numbers for RHR/Sleep).';
+        saveFeedbackDiv.className = 'feedback-message show error-save';
+        setTimeout(() => { saveFeedbackDiv.classList.remove('show'); saveFeedbackDiv.textContent = ''; }, 3000);
     }
-    // If dataToSave is null, it means there were critical input errors
-    // that prevented a recommendation from being generated at all (e.g., missing RHR).
-    // In such cases, getRecommendation() would have already displayed a 'danger' message
-    // and focused on the problematic input, so no explicit 'else' for saving feedback is needed here.
+    // --- MODIFIED SECTION END ---
 });
 
 // Optional: Auto-fill duration and mental focus if ride type is 'rest_day'
