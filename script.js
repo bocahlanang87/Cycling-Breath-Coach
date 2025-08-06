@@ -13,6 +13,8 @@ const resultDiv = document.getElementById('result');
 const getTipButton = document.getElementById('getTipButton');
 const saveFeedbackDiv = document.getElementById('saveFeedback');
 const saveDataButton = document.getElementById('saveDataButton');
+const actualBreathInputGroup = document.getElementById('actualBreathInputGroup');
+const actualBreathSelect = document.getElementById('actualBreath');
 
 // REPLACE THIS WITH YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbznSAcfk0kB0DV-BX_x_rM-KCnNeRjjqIDNIHwZbyWdS0zSgDRW61cnLyzO8akjSIG7/exec";
@@ -55,7 +57,6 @@ function getRecommendation() {
     if (!rideType) { resultDiv.innerHTML = "<p class='danger'>❗ Please select a Ride Type.</p>"; resultDiv.classList.add('danger'); rideTypeSelect.focus(); return null; }
     if (!offRideActivity) { resultDiv.innerHTML = "<p class='danger'>❗ Please select today's off-bike activity.</p>"; resultDiv.classList.add('danger'); offRideActivitySelect.focus(); return null; }
     // This next check (RHR difference) produces a 'warning' but does NOT return null.
-    // This is the kind of 'danger' you want to save.
     if (Math.abs(rhrToday - rhrAvg) > 30) { resultDiv.innerHTML = "<p class='warning'>❗ Your current RHR seems extreme compared to your average. Please recheck your input.</p>"; resultDiv.classList.add('warning'); rhrTodayInput.focus(); /* Do NOT return null here */ }
 
     if (rideType === 'rest_day') {
@@ -66,7 +67,6 @@ function getRecommendation() {
         if (!mentalFocus) { resultDiv.innerHTML = "<p class='danger'>❗ Please select your Mental Focus.</p>"; resultDiv.classList.add('danger'); mentalFocusSelect.focus(); return null; }
     }
     // --- End of input validation checks that return null if failed ---
-
 
     const { status: fatigueStatus, tip: fatigueOverallTip, lookupKey: fatigueLookupKey } = getFatigueStatus(rhrToday, rhrAvg, sleepScore);
     const combinedReadinessScore = getCombinedReadinessScore(legFeel, rhrToday, rhrAvg, sleepScore, mentalFocus);
@@ -119,6 +119,9 @@ function getRecommendation() {
     resultDiv.innerHTML = outputHtml;
     resultDiv.classList.add('result', finalOutputClass || 'info');
 
+    // Show the "Actual Breath Used" input after getting a recommendation
+    actualBreathInputGroup.style.display = 'block';
+
     return {
         rhrToday, rhrAvg, sleepScore, legFeel, duration, rideType, mentalFocus, offRideActivity,
         fatigueStatus: fatigueStatus,
@@ -133,42 +136,44 @@ function getRecommendation() {
 getTipButton.addEventListener('click', () => { getRecommendation(); });
 
 saveDataButton.addEventListener('click', async () => {
-    // Attempt to get the recommendation data.
-    // If fundamental input validation fails (e.g., NaN for RHR, or empty required selects),
-    // getRecommendation() will return null and display an error message.
     const dataToSave = getRecommendation();
+    const actualBreath = actualBreathSelect.value;
 
-    // --- MODIFIED SECTION START ---
     if (dataToSave) {
-        // If dataToSave is NOT null, it means all basic inputs were valid,
-        // and a data object was successfully constructed.
-        // We will now proceed to save this data, REGARDLESS of whether
-        // the recommendation itself includes 'danger' or 'warning' flags.
+        // Add validation for the new input field
+        if (dataToSave.rideType !== 'rest_day' && !actualBreath) {
+            saveFeedbackDiv.textContent = '❗ Please select the breathing pattern you actually used.';
+            saveFeedbackDiv.className = 'feedback-message show error-save';
+            setTimeout(() => { saveFeedbackDiv.classList.remove('show'); saveFeedbackDiv.textContent = ''; }, 3000);
+            return; // Stop the function if validation fails
+        }
+        
+        // Add the new field to the data object
+        dataToSave.actualBreath = actualBreath;
+
         await sendDataToGoogleSheet(dataToSave);
     } else {
-        // This 'else' block will ONLY execute if getRecommendation() returned null.
-        // This indicates essential input fields are invalid or empty,
-        // and thus, there's no meaningful data structure to save.
-        saveFeedbackDiv.textContent = '❗ Please fill in all required fields and correct basic input errors (e.g., valid numbers for RHR/Sleep).';
+        saveFeedbackDiv.textContent = '❗ Please fill in all required fields and correct basic input errors.';
         saveFeedbackDiv.className = 'feedback-message show error-save';
         setTimeout(() => { saveFeedbackDiv.classList.remove('show'); saveFeedbackDiv.textContent = ''; }, 3000);
     }
-    // --- MODIFIED SECTION END ---
 });
 
-// Optional: Auto-fill duration and mental focus if ride type is 'rest_day'
 rideTypeSelect.addEventListener('change', () => {
     if (rideTypeSelect.value === 'rest_day') {
         durationInput.value = 0;
         durationInput.setAttribute('disabled', 'true');
-        mentalFocusSelect.value = 'N/A'; // Assuming 'N/A' is a valid option or handled
+        mentalFocusSelect.value = 'N/A';
         mentalFocusSelect.setAttribute('disabled', 'true');
+        actualBreathInputGroup.style.display = 'none';
+        actualBreathSelect.value = 'not_applicable';
     } else {
         durationInput.removeAttribute('disabled');
-        // Reset mentalFocus if it was set to N/A and is now enabled
         if (mentalFocusSelect.value === 'N/A') {
-            mentalFocusSelect.value = ''; // Or a default like 'okay'
+            mentalFocusSelect.value = '';
         }
         mentalFocusSelect.removeAttribute('disabled');
+        actualBreathInputGroup.style.display = 'block';
+        actualBreathSelect.value = '';
     }
 });
