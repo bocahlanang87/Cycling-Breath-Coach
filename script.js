@@ -1,6 +1,8 @@
+// script.js
 import { rideConfigs } from './rideConfigs.js';
 import { isRHRCriticallyElevated, getFatigueStatus, getCombinedReadinessScore, manageBreathHistory } from './utils.js';
 
+// ... (existing code for constants and DOM elements)
 const rhrTodayInput = document.getElementById('rhrToday');
 const rhrAvgInput = document.getElementById('rhrAvg');
 const sleepScoreInput = document.getElementById('sleepScore');
@@ -26,7 +28,7 @@ async function sendDataToGoogleSheet(data) {
         await fetch(WEB_APP_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data), });
         saveFeedbackDiv.textContent = '✅ Data saved to sheet!';
         saveFeedbackDiv.className = 'feedback-message show success-save';
-        manageBreathHistory(data.breathTip, data.rideType, true);
+        manageBreathHistory(data.breathTip, data.rideType, data.actualBreath, true); // Pass actualBreaths to history function
     } catch (error) {
         console.error("Error sending data to Google Sheet:", error);
         saveFeedbackDiv.textContent = '❗ Error saving data to sheet.';
@@ -43,6 +45,7 @@ function getRecommendation() {
     resultDiv.innerHTML = '';
     resultDiv.className = 'result';
     
+    // ... (existing validation code)
     const rhrToday = parseInt(rhrTodayInput.value);
     const rhrAvg = parseInt(rhrAvgInput.value);
     const sleepScore = parseInt(sleepScoreInput.value);
@@ -68,6 +71,7 @@ function getRecommendation() {
     }
     if (Math.abs(rhrToday - rhrAvg) > 30) { resultDiv.innerHTML += "<p class='warning'>❗ Your current RHR seems extreme compared to your average. Please recheck your input.</p>"; resultDiv.classList.add('warning'); rhrTodayInput.focus(); }
 
+    // --- Core Recommendation Logic ---
     const { status: fatigueStatus, tip: fatigueOverallTip, lookupKey: fatigueLookupKey } = getFatigueStatus(rhrToday, rhrAvg, sleepScore);
     const combinedReadinessScore = getCombinedReadinessScore(legFeel, rhrToday, rhrAvg, sleepScore, mentalFocus);
 
@@ -78,8 +82,8 @@ function getRecommendation() {
     if (!recommendation && config.default) recommendation = config.default;
     if (!recommendation) { recommendation = { mainBreath: "General: 4-in / 4-out (nasal)", easyBreath: "Calming: 4-in / 6-out", tip: "Focus on smooth, consistent breathing. Always listen to your body.", outputClass: "info", bonusTip: "" }; }
 
-    const historyCheck = manageBreathHistory(recommendation.mainBreath, rideType, false);
-
+    const historyCheck = manageBreathHistory(recommendation.mainBreath, rideType, "", false);
+    
     let finalBreathTip = recommendation.mainBreath;
     let finalOverallTip = recommendation.tip;
     let finalOutputClass = recommendation.outputClass;
@@ -100,6 +104,17 @@ function getRecommendation() {
         finalBonusTip = '';
         warningMessageHtml += `<p class="warning">⚠️ ${historyCheck.warning}</p>`;
     }
+
+    // *** NEW LOGIC: Adjust recommendation based on last ride's actual breath ***
+    if (historyCheck.lastActualBreaths && rideType !== 'rest_day') {
+        const lastBreaths = historyCheck.lastActualBreaths.split(', ');
+        if (lastBreaths.includes('interval_explosive') && rideType !== 'interval' && rideType !== 'showoff') {
+            finalOverallTip += ` On your last ride, you used a high-intensity breath pattern. Ensure today's ride aligns with your goals and readiness score.`;
+        } else if (lastBreaths.includes('recovery_nasal') && rideType !== 'recovery' && rideType !== 'rest_day' && combinedReadinessScore > 7) {
+            finalOverallTip += ` On your last ride you used a recovery breath. With today's high readiness score, you may be ready to try a more challenging breath pattern.`;
+        }
+    }
+    // *** END NEW LOGIC ***
 
     let outputHtml = `
         <h2>${config.label || rideType.charAt(0).toUpperCase() + rideType.slice(1)}</h2>
@@ -176,3 +191,4 @@ rideTypeSelect.addEventListener('change', () => {
         });
     }
 });
+
