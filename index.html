@@ -1,99 +1,112 @@
-<!DOCTYPE html>  
-<html lang="en">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Your Performance Breath Guide</title>  
-    <link rel="stylesheet" href="style.css">  
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">  
-</head>  
-<body>  
-    <div class="container">  
-        <h1>Your Performance Breath Guide</h1>  
-        <p class="tagline">Optimize Every Pedal Stroke with Personalized Breathing.</p>  
-  
-        <form id="breathCoachForm">  
-            <div class="form-group">  
-                <label for="rhrToday">Resting Heart Rate Today (bpm):</label>  
-                <input type="number" id="rhrToday" min="30" max="100" placeholder="e.g., 55" required>  
-                <small>Your RHR this morning.</small>  
-            </div>  
-  
-            <div class="form-group">  
-                <label for="rhrAvg">7-Day Average RHR (bpm):</label>  
-                <input type="number" id="rhrAvg" min="30" max="100" placeholder="e.g., 52" required>  
-                <small>Your usual resting heart rate.</small>  
-            </div>  
-  
-            <div class="form-group">  
-                <label for="sleepScore">Sleep Score Last Night (0-100):</label>  
-                <input type="number" id="sleepScore" min="0" max="100" placeholder="e.g., 85" required>  
-                <small>From your wearable device or self-assessment.</small>  
-            </div>  
-  
-            <div class="form-group">  
-                <label for="legFeel">How Do Your Legs Feel?</label>  
-                <select id="legFeel" required>  
-                    <option value="">-- Select --</option>  
-                    <option value="very_fresh">🚀 Very Fresh</option>  
-                    <option value="fresh">✅ Fresh</option>  
-                    <option value="normal">💡 Normal</option>  
-                    <option value="tired">⚠️ Tired</option>  
-                    <option value="very_tired">❗ Very Tired</option>  
-                </select>  
-            </div>  
-  
-            <div class="form-group">  
-                <label for="mentalFocus">Mental Focus Today?</label>  
-                <select id="mentalFocus" required>  
-                    <option value="">-- Select --</option>  
-                    <option value="sharp">⚡ Sharp</option>  
-                    <option value="okay">🤔 Okay</option>  
-                    <option value="dull">😴 Dull</option>  
-                </select>  
-            </div>  
-  
-            <div class="form-group">  
-                <label for="offRideActivity">Off-Bike Activity Last 24 Hrs?</label>  
-                <select id="offRideActivity" required>  
-                    <option value="">-- Select --</option>  
-                    <option value="none">🧘‍♂️ None / Light Activity</option>  
-                    <option value="moderate">🏋️‍♂️ Moderate Strength/Cross-Training</option>  
-                    <option value="heavy">🏃‍♂️ Heavy Strength/Hard Cross-Training</option>  
-                </select>  
-            </div>  
-  
-            <div class="form-group">  
-                <label for="rideType">Planned Ride Type?</label>  
-                <select id="rideType" required>  
-                    <option value="">-- Select --</option>  
-                    <option value="climb">🏔️ Climbing Day</option>  
-                    <option value="endurance">🛣️ Endurance Ride</option>  
-                    <option value="recovery">🧘 Recovery Ride</option>  
-                    <option value="interval">🚀 Interval/Tempo Session</option>  
-                    <option value="tempo">📈 Tempo Ride</option>  
-                    <option value="showoff">🔥 Show-Off / Fast Group Ride</option>  
-                    <option value="rest_day">😴 Rest Day / No Ride</option>  
-                </select>  
-            </div>  
-  
-            <div class="form-group">  
-                <label for="duration">Training Duration (minutes):</label>  
-                <input type="number" id="duration" min="0" max="360" placeholder="e.g., 90">  
-                <small>Set to 0 if 'Rest Day / No Ride' is selected.</small>  
-            </div>  
-  
-            <button type="button" id="getTipButton">Get My Personalized Breath Plan</button>  
-        </form>  
-  
-        <div id="result" class="result">  
-            <p>Enter your details and click 'Get My Personalized Breath Plan' to receive tailored advice.</p>  
-        </div>  
-  
-        <button type="button" id="saveDataButton">Save Today's Data to Sheet</button>  
-        <div id="saveFeedback" class="feedback-message"></div>  
-    </div>  
-  
-    <script type="module" src="script.js"></script>  
-</body>  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Performance Breath Guide</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Your Performance Breath Guide</h1>
+        <p class="tagline">Optimize Every Pedal Stroke with Personalized Breathing.</p>
+
+        <form id="breathCoachForm">
+            <div class="form-group">
+                <label for="rhrToday">Resting Heart Rate Today (bpm):</label>
+                <input type="number" id="rhrToday" min="30" max="100" placeholder="e.g., 55" required>
+                <small>Your RHR this morning.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="rhrAvg">7-Day Average RHR (bpm):</label>
+                <input type="number" id="rhrAvg" min="30" max="100" placeholder="e.g., 52" required>
+                <small>Your usual resting heart rate.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="sleepScore">Sleep Score Last Night (0-100):</label>
+                <input type="number" id="sleepScore" min="0" max="100" placeholder="e.g., 85" required>
+                <small>From your wearable device or self-assessment.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="legFeel">How Do Your Legs Feel?</label>
+                <select id="legFeel" required>
+                    <option value="">-- Select --</option>
+                    <option value="very_fresh">🚀 Very Fresh</option>
+                    <option value="fresh">✅ Fresh</option>
+                    <option value="normal">💡 Normal</option>
+                    <option value="tired">⚠️ Tired</option>
+                    <option value="very_tired">❗ Very Tired</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="mentalFocus">Mental Focus Today?</label>
+                <select id="mentalFocus" required>
+                    <option value="">-- Select --</option>
+                    <option value="sharp">⚡ Sharp</option>
+                    <option value="okay">🤔 Okay</option>
+                    <option value="dull">😴 Dull</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="offRideActivity">Off-Bike Activity Last 24 Hrs?</label>
+                <select id="offRideActivity" required>
+                    <option value="">-- Select --</option>
+                    <option value="none">🧘‍♂️ None / Light Activity</option>
+                    <option value="moderate">🏋️‍♂️ Moderate Strength/Cross-Training</option>
+                    <option value="heavy">🏃‍♂️ Heavy Strength/Hard Cross-Training</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="rideType">Planned Ride Type?</label>
+                <select id="rideType" required>
+                    <option value="">-- Select --</option>
+                    <option value="climb">🏔️ Climbing Day</option>
+                    <option value="endurance">🛣️ Endurance Ride</option>
+                    <option value="recovery">🧘 Recovery Ride</option>
+                    <option value="interval">🚀 Interval/Tempo Session</option>
+                    <option value="tempo">📈 Tempo Ride</option>
+                    <option value="showoff">🔥 Show-Off / Fast Group Ride</option>
+                    <option value="rest_day">😴 Rest Day / No Ride</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="duration">Training Duration (minutes):</label>
+                <input type="number" id="duration" min="0" max="360" placeholder="e.g., 90">
+                <small>Set to 0 if 'Rest Day / No Ride' is selected.</small>
+            </div>
+
+            <button type="button" id="getTipButton">Get My Personalized Breath Plan</button>
+        </form>
+
+        <div id="result" class="result">
+            <p>Enter your details and click 'Get My Personalized Breath Plan' to receive tailored advice.</p>
+        </div>
+
+        <div class="form-group" id="actualBreathInputGroup" style="display:none;">
+            <label for="actualBreath">Actual Breath Used:</label>
+            <select id="actualBreath">
+                <option value="">-- Select --</option>
+                <option value="recovery_nasal">Nasal Recovery (e.g., 6-in/6-out)</option>
+                <option value="endurance_steady">Steady Endurance (e.g., 4-in/4-out)</option>
+                <option value="tempo_power">Tempo/Power (e.g., 3-in/3-out)</option>
+                <option value="interval_explosive">Interval/Explosive (e.g., 2-in/2-out)</option>
+                <option value="not_applicable">N/A (Rest Day / No Ride)</option>
+            </select>
+            <small>Select the breathing pattern you actually used on your ride.</small>
+        </div>
+
+        <button type="button" id="saveDataButton">Save Today's Data to Sheet</button>
+        <div id="saveFeedback" class="feedback-message"></div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
 </html>
