@@ -159,7 +159,6 @@ rideTypeSelect.addEventListener('change', () => {
         mentalFocusSelect.value = 'N/A';
         mentalFocusSelect.setAttribute('disabled', 'true');
         actualBreathInputGroup.style.display = 'none';
-        // Check the 'N/A' box and uncheck others
         actualBreathCheckboxes.forEach(cb => {
             cb.checked = cb.value === 'not_applicable';
             cb.setAttribute('disabled', 'true');
@@ -170,7 +169,8 @@ rideTypeSelect.addEventListener('change', () => {
             mentalFocusSelect.value = '';
         }
         mentalFocusSelect.removeAttribute('disabled');
-        actualBreathInputGroup.style.display = 'none';
+        // This is the fix: do not hide the input group here.
+        // It will be shown after the user clicks the getTipButton.
         actualBreathCheckboxes.forEach(cb => {
             cb.checked = false;
             cb.removeAttribute('disabled');
