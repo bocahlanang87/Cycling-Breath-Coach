@@ -1,3 +1,4 @@
+// utils.js
 export function isRHRCriticallyElevated(rhrToday, rhrAvg, thresholdPercentage = 8) {
     if (typeof rhrToday !== 'number' || typeof rhrAvg !== 'number' || rhrAvg === 0) { return false; }
     const percentageIncrease = ((rhrToday - rhrAvg) / rhrAvg) * 100;
@@ -40,9 +41,12 @@ export function getCombinedReadinessScore(legFeel, rhrToday, rhrAvg, sleepScore,
     return (score / 10).toFixed(2);
 }
 
-export function manageBreathHistory(currentBreathTip, rideType, shouldRecord = false) {
+// *** MODIFIED LOGIC HERE ***
+export function manageBreathHistory(currentBreathTip, rideType, actualBreaths, shouldRecord = false) {
     const today = new Date().toISOString().split('T')[0];
     let history = JSON.parse(localStorage.getItem('breathTipHistory')) || [];
+    
+    // Filter history to only keep the last 4 days
     history = history.filter(entry => entry.date >= new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]);
 
     const isHighIntensityBreath = currentBreathTip.includes('2-in / 2-out') || currentBreathTip.includes('Explosive') || currentBreathTip.includes('Powerful Intervals') || currentBreathTip.includes('Surge Mode');
@@ -52,17 +56,19 @@ export function manageBreathHistory(currentBreathTip, rideType, shouldRecord = f
         for (const entry of history) { if (entry.date !== today && entry.isHighIntensity) { recentHighIntensityDays.add(entry.date); }}
         if (recentHighIntensityDays.size >= 2) {
             const alternativeTip = "Controlled Breathing: 4-in / 4-out (nasal, steady effort).";
-            return { override: true, warning: "You've been consistently using high-intensity breathing for the past two days. Consider a more moderate approach today to aid recovery and prevent overtraining.", alternativeBreath: alternativeTip };
+            return { override: true, warning: "You've been consistently using high-intensity breathing for the past two days. Consider a more moderate approach today to aid recovery and prevent overtraining.", alternativeBreath: alternativeTip, lastActualBreaths: history[history.length - 1]?.actualBreaths || "" };
         }
     }
 
     if (shouldRecord) {
-        const alreadyLoggedToday = history.some(entry => entry.date === today && entry.breathTip === currentBreathTip);
-        if (!isHighIntensityBreath || (isHighIntensityBreath && !alreadyLoggedToday)) {
-            history.push({ date: today, rideType: rideType, breathTip: currentBreathTip, isHighIntensity: isHighIntensityBreath });
+        const alreadyLoggedToday = history.some(entry => entry.date === today);
+        if (!alreadyLoggedToday) {
+            history.push({ date: today, rideType: rideType, breathTip: currentBreathTip, actualBreaths: actualBreaths, isHighIntensity: isHighIntensityBreath });
             localStorage.setItem('breathTipHistory', JSON.stringify(history));
         }
     }
 
-    return { override: false };
+    const lastActualBreaths = history[history.length - 1]?.actualBreaths || "";
+    return { override: false, lastActualBreaths };
 }
+
