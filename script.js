@@ -40,8 +40,11 @@ async function sendDataToGoogleSheet(data) {
 }
 
 function getRecommendation() {
-    resultDiv.innerHTML = '<p>Enter your details and click \'Get My Personalized Breath Plan\' to receive tailored advice.</p>';
+    // Reset the result section immediately to show something is happening
+    resultDiv.innerHTML = '';
     resultDiv.className = 'result';
+    
+    // Get all input values
     const rhrToday = parseInt(rhrTodayInput.value);
     const rhrAvg = parseInt(rhrAvgInput.value);
     const sleepScore = parseInt(sleepScoreInput.value);
@@ -50,14 +53,14 @@ function getRecommendation() {
     const rideType = rideTypeSelect.value;
     let mentalFocus = mentalFocusSelect.value;
     const offRideActivity = offRideActivitySelect.value;
-
+    
+    // --- Start of input validation checks that return null if failed ---
     if (isNaN(rhrToday) || rhrToday < 30 || rhrToday > 100) { resultDiv.innerHTML = "<p class='danger'>❗ Please enter a valid RHR Today (30-100 bpm).</p>"; resultDiv.classList.add('danger'); rhrTodayInput.focus(); return null; }
     if (isNaN(rhrAvg) || rhrAvg < 30 || rhrAvg > 100) { resultDiv.innerHTML = "<p class='danger'>❗ Please enter a valid RHR 7-Day Avg (30-100 bpm).</p>"; resultDiv.classList.add('danger'); rhrAvgInput.focus(); return null; }
     if (isNaN(sleepScore) || sleepScore < 0 || sleepScore > 100) { resultDiv.innerHTML = "<p class='danger'>❗ Please enter a valid Sleep Score (0-100).</p>"; resultDiv.classList.add('danger'); sleepScoreInput.focus(); return null; }
     if (!legFeel) { resultDiv.innerHTML = "<p class='danger'>❗ Please select how your legs feel.</p>"; resultDiv.classList.add('danger'); legFeelSelect.focus(); return null; }
     if (!rideType) { resultDiv.innerHTML = "<p class='danger'>❗ Please select a Ride Type.</p>"; resultDiv.classList.add('danger'); rideTypeSelect.focus(); return null; }
     if (!offRideActivity) { resultDiv.innerHTML = "<p class='danger'>❗ Please select today's off-bike activity.</p>"; resultDiv.classList.add('danger'); offRideActivitySelect.focus(); return null; }
-    if (Math.abs(rhrToday - rhrAvg) > 30) { resultDiv.innerHTML = "<p class='warning'>❗ Your current RHR seems extreme compared to your average. Please recheck your input.</p>"; resultDiv.classList.add('warning'); rhrTodayInput.focus(); }
 
     if (rideType === 'rest_day') {
         duration = 0;
@@ -66,6 +69,9 @@ function getRecommendation() {
         if (isNaN(duration) || duration < 10) { resultDiv.innerHTML = "<p class='danger'>❗ Please enter a valid Training Duration (at least 10 minutes).</p>"; resultDiv.classList.add('danger'); durationInput.focus(); return null; }
         if (!mentalFocus) { resultDiv.innerHTML = "<p class='danger'>❗ Please select your Mental Focus.</p>"; resultDiv.classList.add('danger'); mentalFocusSelect.focus(); return null; }
     }
+    // This check produces a 'warning' but does NOT return null.
+    if (Math.abs(rhrToday - rhrAvg) > 30) { resultDiv.innerHTML += "<p class='warning'>❗ Your current RHR seems extreme compared to your average. Please recheck your input.</p>"; resultDiv.classList.add('warning'); rhrTodayInput.focus(); }
+    // --- End of input validation checks that return null if failed ---
 
     const { status: fatigueStatus, tip: fatigueOverallTip, lookupKey: fatigueLookupKey } = getFatigueStatus(rhrToday, rhrAvg, sleepScore);
     const combinedReadinessScore = getCombinedReadinessScore(legFeel, rhrToday, rhrAvg, sleepScore, mentalFocus);
@@ -169,8 +175,6 @@ rideTypeSelect.addEventListener('change', () => {
             mentalFocusSelect.value = '';
         }
         mentalFocusSelect.removeAttribute('disabled');
-        // This is the fix: do not hide the input group here.
-        // It will be shown after the user clicks the getTipButton.
         actualBreathCheckboxes.forEach(cb => {
             cb.checked = false;
             cb.removeAttribute('disabled');
