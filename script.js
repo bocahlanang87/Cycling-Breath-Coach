@@ -14,7 +14,7 @@ const getTipButton = document.getElementById('getTipButton');
 const saveFeedbackDiv = document.getElementById('saveFeedback');
 const saveDataButton = document.getElementById('saveDataButton');
 const actualBreathInputGroup = document.getElementById('actualBreathInputGroup');
-const actualBreathSelect = document.getElementById('actualBreath');
+const actualBreathCheckboxes = document.querySelectorAll('input[name="actualBreath"]');
 
 // REPLACE THIS WITH YOUR DEPLOYED GOOGLE APPS SCRIPT WEB APP URL
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbznSAcfk0kB0DV-BX_x_rM-KCnNeRjjqIDNIHwZbyWdS0zSgDRW61cnLyzO8akjSIG7/exec";
@@ -50,7 +50,6 @@ function getRecommendation() {
     const rideType = rideTypeSelect.value;
     let mentalFocus = mentalFocusSelect.value;
     const offRideActivity = offRideActivitySelect.value;
-    const actualBreath = actualBreathSelect.value;
 
     if (isNaN(rhrToday) || rhrToday < 30 || rhrToday > 100) { resultDiv.innerHTML = "<p class='danger'>❗ Please enter a valid RHR Today (30-100 bpm).</p>"; resultDiv.classList.add('danger'); rhrTodayInput.focus(); return null; }
     if (isNaN(rhrAvg) || rhrAvg < 30 || rhrAvg > 100) { resultDiv.innerHTML = "<p class='danger'>❗ Please enter a valid RHR 7-Day Avg (30-100 bpm).</p>"; resultDiv.classList.add('danger'); rhrAvgInput.focus(); return null; }
@@ -118,7 +117,6 @@ function getRecommendation() {
 
     resultDiv.innerHTML = outputHtml;
     resultDiv.classList.add('result', finalOutputClass || 'info');
-
     actualBreathInputGroup.style.display = 'block';
 
     return {
@@ -135,17 +133,17 @@ getTipButton.addEventListener('click', () => { getRecommendation(); });
 
 saveDataButton.addEventListener('click', async () => {
     const dataToSave = getRecommendation();
-    const actualBreath = actualBreathSelect.value;
+    const checkedBreaths = Array.from(actualBreathCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
 
     if (dataToSave) {
-        if (dataToSave.rideType !== 'rest_day' && !actualBreath) {
-            saveFeedbackDiv.textContent = '❗ Please select the breathing pattern you actually used.';
+        if (dataToSave.rideType !== 'rest_day' && checkedBreaths.length === 0) {
+            saveFeedbackDiv.textContent = '❗ Please select the breathing patterns you actually used.';
             saveFeedbackDiv.className = 'feedback-message show error-save';
             setTimeout(() => { saveFeedbackDiv.classList.remove('show'); saveFeedbackDiv.textContent = ''; }, 3000);
             return;
         }
 
-        dataToSave.actualBreath = actualBreath;
+        dataToSave.actualBreath = checkedBreaths.join(', ');
         await sendDataToGoogleSheet(dataToSave);
     } else {
         saveFeedbackDiv.textContent = '❗ Please fill in all required fields and correct basic input errors.';
@@ -161,14 +159,21 @@ rideTypeSelect.addEventListener('change', () => {
         mentalFocusSelect.value = 'N/A';
         mentalFocusSelect.setAttribute('disabled', 'true');
         actualBreathInputGroup.style.display = 'none';
-        actualBreathSelect.value = 'not_applicable';
+        // Check the 'N/A' box and uncheck others
+        actualBreathCheckboxes.forEach(cb => {
+            cb.checked = cb.value === 'not_applicable';
+            cb.setAttribute('disabled', 'true');
+        });
     } else {
         durationInput.removeAttribute('disabled');
         if (mentalFocusSelect.value === 'N/A') {
             mentalFocusSelect.value = '';
         }
         mentalFocusSelect.removeAttribute('disabled');
-        actualBreathInputGroup.style.display = 'none'; // Initially hide this input
-        actualBreathSelect.value = '';
+        actualBreathInputGroup.style.display = 'none';
+        actualBreathCheckboxes.forEach(cb => {
+            cb.checked = false;
+            cb.removeAttribute('disabled');
+        });
     }
 });
